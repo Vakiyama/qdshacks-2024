@@ -4,7 +4,8 @@ import { body, validationResult } from "express-validator";
 import flash from "connect-flash";
 import { renderToHtml } from "jsxte";
 import { Home } from "../views/pages/Home";
-import { type User } from "../interface/interface";
+import { Login } from "../views/pages/Login";
+import { Register } from "../views/pages/Register";
 import { UserService } from "../database/Users";
 const router = Router();
 const db = new UserService();
@@ -18,7 +19,7 @@ declare module "express-session" {
 router.get("/login", (req: Request, res: Response) => {
   const html = renderToHtml(
     <Home>
-      <p>"Hello QDS"</p>
+      <Login />
     </Home>
   );
   res.send(html);
@@ -42,9 +43,13 @@ router.post(
     const { email, password } = req.body;
     try {
       const user = await db.findUserByEmail(email);
-      if (user) {
-        const match = await bcrypt.compare(password, user.password);
+
+      if (!user) {
+        return res.status(401).send("Invalid username or password");
       }
+
+      const match = await bcrypt.compare(password, user.password);
+
       if (!match) {
         res.status(401).send("Invalid username or password");
       } else {
@@ -61,7 +66,7 @@ router.post(
 router.get("/register", (req: Request, res: Response) => {
   const html = renderToHtml(
     <Home>
-      <p>"Hello QDS"</p>
+      <Register />
     </Home>
   );
   res.send(html);
@@ -97,7 +102,8 @@ router.post(
         const salt = await bcrypt.genSalt(saltRounds);
         const hashedPassword = await bcrypt.hash(password, salt);
         await db.createUser(username, email, hashedPassword);
-        res.redirect("/auth/login");
+        console.log("The user got created");
+        res.send("User created");
       }
     } catch (error) {
       console.error(error);
