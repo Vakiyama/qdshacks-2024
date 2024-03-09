@@ -1,14 +1,19 @@
-import Express from "express";
-import session from "express-session";
+import express from 'express';
+import session from 'express-session';
+import { indexRouter } from './router/indexRouter';
+import bodyParser from 'body-parser';
+
+const PORT = process.env.PORT || 3000;
 
 // import db from "./databaseAccess"
 
-const app = Express();
-app.set("view engine", "ejs");
+const app = express();
+app.use(express.static('public'));
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(
   session({
-    secret: "secret",
+    secret: 'secret',
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -19,34 +24,8 @@ app.use(
   })
 );
 
-app.get("/", (req, res) => {
-  res.send("This is the homepage");
-});
+app.use(indexRouter);
 
-app.get("/setup", (req, res) => {
-  res.send("This is the setup page");
-});
-
-app.post("/add/spoon/:id", (req, res) => {});
-
-app.post("/remove/spoon/:id", (req, res) => {});
-
-app.post("/add/category/:id", (req, res) => {});
-
-app.post("/remove/category/:id", (req, res) => {});
-
-app.get("/spoon/history", (req, res) => {});
-
-// app.get("login", (req, res) => {});
-
-// app.post("/login", (req, res) => {});
-
-// app.get("/register", (req, res) => {});
-
-// app.post("/register", (req, res) => {});
-
-// app.get("/logout", (req, res) => {});
-
-app.listen(3000, () => {
-  console.log("Server is running on port 3000");
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
