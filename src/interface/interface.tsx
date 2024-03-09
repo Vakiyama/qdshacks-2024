@@ -18,16 +18,21 @@ export interface Session {
 }
 
 export interface UserServices {
-  findUserByUsernameAndPassword: (
+  findUserByEmailAndPassword: (
     username: string,
     password: string
   ) => Promise<User | null>;
   findUserByUsername: (username: string) => Promise<User | null>;
+  findUserByEmail: (email: string) => Promise<User | null>;
   createUser: (username: string, password: string) => Promise<User>;
   findUserById: (id: string) => Promise<User | null>;
 }
 
-export interface Category {}
+export interface Category {
+  name: string;
+  energy: number;
+  creatorId: number;
+}
 
 export interface CategoryServices {
   createCategory: (name: string) => Promise<Category>;

@@ -4,6 +4,7 @@ import { body, validationResult } from "express-validator";
 import flash from "connect-flash";
 import { renderToHtml } from "jsxte";
 import { Home } from "../views/pages/Home";
+import { type User } from "../interface/interface";
 const router = Router();
 
 declare module "express-session" {
