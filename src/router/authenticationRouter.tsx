@@ -5,7 +5,9 @@ import flash from "connect-flash";
 import { renderToHtml } from "jsxte";
 import { Home } from "../views/pages/Home";
 import { type User } from "../interface/interface";
+import { UserService } from "../database/Users";
 const router = Router();
+const db = new UserService();
 
 
 
@@ -40,10 +42,12 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    const { username, password } = req.body;
+    const { email, password } = req.body;
     try {
-      const user = await db.findUserbyUsername(username, password);
-      const match = await bcrypt.compare(password, user.password);
+      const user = await db.findUserByEmail(email);
+      if (user) {
+        const match = await bcrypt.compare(password, user.password);
+      }
       if (!match) {
         res.status(401).send("Invalid username or password");
       } else {

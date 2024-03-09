@@ -10,6 +10,9 @@ export function Login() {
         place-self-center 
         w-fit
         h-fit 
+        border-solid
+        border-4
+        border-black
         bg-indigo-500 
         align-middle 
         rounded-lg 
@@ -19,24 +22,29 @@ export function Login() {
             <label for="emailOrUsername">
               <p class="text-gray-50">Username:</p>
             </label>
-            <input
+            <input class = "border-2 border-black"
               type="text"
               required
               name="emailOrUsername"
-              placeholder="Username or Password"
+              placeholder="Username"
             />
             <label for="password">
-              <p class="text-gray-50"> Password:</p>
+              <p class="text-gray-50 "> Password:</p>
             </label>
-            <input
+            <input class="mb-4 border-2 border-black"
               type="password"
               required
               name="password"
               placeholder="Password"
             />
+            <label class = "border-4 border-black hover:bg-blue-500 hover:text-white pl-1" for = "submit">
+                    <input class = "flex justify-end" type = "submit"
+                        value="Submit" />
+            </label>
           </form>
         </div>
       </div>
     </Html>
   );
 }
+

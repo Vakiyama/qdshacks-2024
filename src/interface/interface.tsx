@@ -19,13 +19,17 @@ export interface Session {
 
 export interface UserServices {
   findUserByEmailAndPassword: (
+    email: string,
+    password_hash: string
+  ) => Promise<User | undefined>;
+  findUserByUsername: (username: string) => Promise<User | undefined>;
+  findUserByEmail: (email: string) => Promise<User | undefined>;
+  createUser: (
+    email: string,
     username: string,
-    password: string
-  ) => Promise<User | null>;
-  findUserByUsername: (username: string) => Promise<User | null>;
-  findUserByEmail: (email: string) => Promise<User | null>;
-  createUser: (username: string, password: string) => Promise<User>;
-  findUserById: (id: string) => Promise<User | null>;
+    password_hash: string
+  ) => Promise<bigint | undefined>;
+  findUserById: (id: number) => Promise<User | undefined>;
 }
 
 export interface Category {
@@ -35,7 +39,12 @@ export interface Category {
 }
 
 export interface CategoryServices {
-  createCategory: (name: string) => Promise<Category>;
-  findCategoryByName: (name: string) => Promise<Category | null>;
-  findCategoryById: (id: string) => Promise<Category | null>;
+  createCategory: (name: string, energy: number) => Promise<bigint | undefined>;
+  removeCategory: (name: string) => Promise<boolean>;
+  findCategoryByName: (name: string) => Promise<Category | undefined>;
+  getCateoriesByUserId: (id: number) => Promise<Category[] | undefined>;
+}
+export interface ResultSet {
+  rows: Array<{ [key: string]: any }>;
+  columns: string[];
 }
