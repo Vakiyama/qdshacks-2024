@@ -39,9 +39,10 @@ export interface Category {
 }
 
 export interface CategoryServices {
-  createCategory: (name: string) => Promise<Category>;
-  findCategoryByName: (name: string) => Promise<Category | null>;
-  findCategoryById: (id: string) => Promise<Category | null>;
+  createCategory: (name: string, energy: number) => Promise<bigint | undefined>;
+  removeCategory: (name: string) => Promise<boolean>;
+  findCategoryByName: (name: string) => Promise<Category | undefined>;
+  getCateoriesByUserId: (id: number) => Promise<Category[] | undefined>;
 }
 export interface ResultSet {
   rows: Array<{ [key: string]: any }>;
