@@ -2,6 +2,8 @@
 
 # Logs
 
+public/output.css
+
 logs
 _.log
 npm-debug.log_
