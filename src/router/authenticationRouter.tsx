@@ -7,6 +7,9 @@ import { Home } from "../views/pages/Home";
 import { type User } from "../interface/interface";
 const router = Router();
 
+
+
+
 declare module "express-session" {
   export interface SessionData {
     userId?: number;
