@@ -14,6 +14,7 @@
                 buildInputs = [
                     bun
                     nodejs_20
+                    sqlite
                 ];
             };
         }

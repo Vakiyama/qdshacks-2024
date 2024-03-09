@@ -5,9 +5,8 @@ export function Html({ children }: JSXTE.ElementProps) {
         <meta charset="utf-8" />
         <meta http-equiv="x-ua-compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="stylesheet" href="/output.css" />
-        <script type="module" src="http://localhost:5173/@vite/client"></script>
-        <script type="module" src="http://localhost:5173/main.js"></script>
+        <link rel="stylesheet" href="/output.css" /> {/* tailwindcss */}
+        <script src="https://unpkg.com/htmx.org@1.9.10"></script>
       </head>
       <body>{children}</body>
     </html>
