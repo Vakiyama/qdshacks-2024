@@ -2,6 +2,10 @@
   "name": "hacks",
   "module": "index.ts",
   "type": "module",
+  "scripts": {
+    "start": "npx tsx src/index.ts"
+    "dev": "npx tsx watch src/index.ts"
+  },
   "devDependencies": {
     "@types/bun": "latest"
   },
