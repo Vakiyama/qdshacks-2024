@@ -6,34 +6,6 @@ import { renderToHtml } from "jsxte";
 import { Home } from "../views/pages/Home";
 const router = Router();
 
-interface User {
-  id: string;
-  username: string;
-  password: string;
-}
-
-export interface Session {
-  cookie: {
-    originalMaxAge: number;
-    expires: string;
-    secure: boolean;
-    httpOnly: boolean;
-    path: string;
-  };
-  flash: string;
-  userId: string;
-}
-
-interface DbServices {
-  findUserByUsernameAndPassword: (
-    username: string,
-    password: string
-  ) => Promise<User | null>;
-  findUserByUsername: (username: string) => Promise<User | null>;
-  createUser: (username: string, password: string) => Promise<User>;
-  findUserById: (id: string) => Promise<User | null>;
-}
-
 declare module "express-session" {
   export interface SessionData {
     userId?: number;
@@ -90,24 +62,44 @@ router.get("/register", (req: Request, res: Response) => {
   res.send(html);
 });
 
-router.post("/register", async (req: Request, res: Response) => {
-  const { username, email, password } = req.body;
-  const saltRounds = 10;
-  try {
-    const user = await db.findUserByUsername(username);
-    if (user) {
-      res.status(400).send("Username already exists");
-    } else {
-      const salt = await bcrypt.genSalt(saltRounds);
-      const hashedPassword = await bcrypt.hash(password, salt);
-      await db.createUser(username, email, hashedPassword);
-      res.redirect("/auth/login");
+router.post(
+  "/register",
+  [
+    body("username", "Username is required").notEmpty(),
+    body("username", "Username must be 3-20 characters long").isLength({
+      min: 3,
+      max: 20,
+    }),
+    body("email", "Email is not valid").isEmail(),
+    body("password", "Password is required").notEmpty(),
+    body("password", "Password must be at least 6 characters long").isLength({
+      min: 6,
+    }),
+  ],
+  async (req: Request, res: Response) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
     }
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Internal Server Error");
+
+    const { username, email, password } = req.body;
+    const saltRounds = 10;
+    try {
+      const user = await db.findUserByUsername(username);
+      if (user) {
+        res.status(400).send("Username already exists");
+      } else {
+        const salt = await bcrypt.genSalt(saltRounds);
+        const hashedPassword = await bcrypt.hash(password, salt);
+        await db.createUser(username, email, hashedPassword);
+        res.redirect("/auth/login");
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Internal Server Error");
+    }
   }
-});
+);
 
 router.get("/logout", (req, res) => {
   req.session.destroy((err) => {
