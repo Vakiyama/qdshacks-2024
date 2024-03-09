@@ -40,7 +40,7 @@ export interface Category {
 
 export interface CategoryServices {
   createCategory: (name: string, energy: number) => Promise<bigint | undefined>;
-  removeCategory: (name: string) => Promise<boolean>;
+  removeCategory: (name: string) => Promise<void>;
   findCategoryByName: (name: string) => Promise<Category | undefined>;
   getCateoriesByUserId: (id: number) => Promise<Category[] | undefined>;
 }

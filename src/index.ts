@@ -8,6 +8,7 @@ import liveReload from "livereload";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import authRouter from "./router/authenticationRouter.js";
+import { DatabaseReset } from "./database/databaseReset.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PORT = process.env.PORT || 3000;
@@ -19,6 +20,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static("public"));
 app.use(connectLiveReload());
+DatabaseReset.resetDatabase();
 
 app.use(
   session({
@@ -32,6 +34,7 @@ app.use(
     },
   })
 );
+
 const liveReloadServer = liveReload.createServer();
 liveReloadServer.watch(path.join(__dirname));
 liveReloadServer.server.once("connection", () => {
