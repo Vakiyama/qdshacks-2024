@@ -1,28 +1,24 @@
 import { Html } from '../components/Html';
 import { NavHeader } from '../components/Navigation';
+import { Category } from '../components/Category';
 
 const categoryClasslist = 'mb-5 w-full bg-gray-400 h-40 mr-4 rounded-lg';
 
 type RGBColor = { r: number; g: number; b: number };
 
-function CategoryWrapper({
-  rgbString,
-  position,
-  powerOpacity,
-}: {
+const CategoryWrapper: JSXTE.Component<{
   rgbString: string;
   position: 'left' | 'right';
   powerOpacity: number;
-}) {
+}> = ({ rgbString, position, powerOpacity, children }) => {
   return (
     <div class="mr-5 relative">
       <div
-        class="mb-5 w-full bg-gray-400 h-40 mr-4 rounded-lg border-2"
-        style={`box-shadow: 0px 0px ${
-          5 + 15 * powerOpacity
-        }px 2px ${rgbString}`}
+        class="mb-8 w-full bg-gray-400 h-40 mr-4 rounded-lg border-2"
+        style={`
+        box-shadow: 0px 0px ${10 + 15 * powerOpacity}px 4px ${rgbString};`}
       >
-        {position === 'left' ? 'CategoryWrapper A' : 'CategoryWrapper B'}
+        {children}
       </div>
       <div
         class={`absolute ${position === 'left' ? 'right-0' : 'left-0'} top-3`}
@@ -36,7 +32,7 @@ function CategoryWrapper({
       </div>
     </div>
   );
-}
+};
 
 // 20*opacity
 export function Categories({ powerOpacity }: { powerOpacity: number }) {
@@ -56,9 +52,9 @@ export function Categories({ powerOpacity }: { powerOpacity: number }) {
     return { r, g, b };
   }
 
-  const blackRGB = { r: 255, g: 251, b: 168 };
-  const yellowRGB = { r: 255, g: 252, b: 0 };
-  const powerLineColor = interpolateColors(blackRGB, yellowRGB, powerOpacity);
+  const background = { r: 96, g: 165, b: 250 };
+  const highlight = { r: 96, g: 165, b: 250 };
+  const powerLineColor = interpolateColors(background, highlight, powerOpacity);
   const rgbString = `rgb(${powerLineColor.r}, ${powerLineColor.g}, ${powerLineColor.b})`;
   return (
     <Html>
@@ -79,23 +75,23 @@ export function Categories({ powerOpacity }: { powerOpacity: number }) {
             position="left"
             rgbString={rgbString}
             powerOpacity={powerOpacity}
-          />
+          >
+            <Category title="Work" data="100" />
+          </CategoryWrapper>
           <CategoryWrapper
             position="left"
             rgbString={rgbString}
             powerOpacity={powerOpacity}
-          />
-          <CategoryWrapper
-            position="left"
-            rgbString={rgbString}
-            powerOpacity={powerOpacity}
-          />
+          >
+            <Category title="Work" data="100" />
+          </CategoryWrapper>
         </div>
         {/* middle-border */}
         <div
-          class="w-px p-px h-full rounded bg-slate-200"
+          class="w-px p-px h-full rounded "
           style={`;
-            box-shadow: 0px 0px 2px 2px ${rgbString};
+            background-color: ${rgbString};
+            box-shadow: 0px 0px ${10 + 15 * powerOpacity}px 4px ${rgbString};
           `}
         />
         {/* middle-border */}
@@ -104,17 +100,16 @@ export function Categories({ powerOpacity }: { powerOpacity: number }) {
             position="right"
             rgbString={rgbString}
             powerOpacity={powerOpacity}
-          />
+          >
+            <Category title="Work" data="100" />
+          </CategoryWrapper>
           <CategoryWrapper
             position="right"
             rgbString={rgbString}
             powerOpacity={powerOpacity}
-          />
-          <CategoryWrapper
-            position="right"
-            rgbString={rgbString}
-            powerOpacity={powerOpacity}
-          />
+          >
+            <Category title="Work" data="100" />
+          </CategoryWrapper>
         </div>
       </div>
     </Html>
