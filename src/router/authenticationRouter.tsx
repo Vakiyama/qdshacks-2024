@@ -71,8 +71,8 @@ router.post("/register", async (req: Request, res: Response) => {
       const id = await db.createUser(username, email, hashedPassword);
       console.log("The user got created");
       req.session.userId = Number(id);
-      categoryService.createCategory("Study", 25, req.session.userId);
-      categoryService.createCategory("Work", 25, req.session.userId);
+      categoryService.createCategory("Study", 5, req.session.userId);
+      categoryService.createCategory("Work", 5, req.session.userId);
       categoryService.createCategory("Leisure", 25, req.session.userId);
       res.redirect("/");
     }
