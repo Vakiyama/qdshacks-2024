@@ -10,13 +10,13 @@ const router = Router();
 router.post("/category/add", async (req: Request, res: Response) => {
     try {
 
-        const {name, energy} = req.body;
+        const {name, energy, user_id} = req.body;
         
         if (!name || !energy) {
             console.log("Name or Energy is incorrect")
         }
         
-        const newCategory = await db.createCategory(name, energy)
+        const newCategory = await db.createCategory(name, energy, user_id)
         // this will be a redirect to be a new htmx page
     } catch (error) {
         console.log("Error Creating Category", error)

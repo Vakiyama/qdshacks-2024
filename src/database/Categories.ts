@@ -34,7 +34,7 @@ export class CategoryService implements CategoryServices {
       }
     }
 
-    async findCategoryById (id: number): Promise<Category[] | undefined> {
+    async getCateoriesByUserId (id: number): Promise<Category[] | undefined> {
       try {
         const sql = `SELECT category_id FROM Category
         WHERE id = ?;

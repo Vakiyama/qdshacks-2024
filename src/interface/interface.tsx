@@ -39,7 +39,7 @@ export interface Category {
 }
 
 export interface CategoryServices {
-  createCategory: (name: string, energy: number, creatorId: number) => Promise<bigint | undefined>;
+  createCategory: (name: string, energy: number, user_id: number) => Promise<bigint | undefined>;
   removeCategory: (name: string) => Promise<void>;
   getCateoriesByUserId: (id: number) => Promise<Category[] | undefined>;
 }
