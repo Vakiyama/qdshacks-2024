@@ -22,12 +22,11 @@ export function Login() {
         >
           <form class="flex flex-col p-5" action="/auth/login" method="post">
             <label for="email">
-              <p class="text-gray-50">Username:</p>
+              <p class="text-gray-50">Email:</p>
             </label>
             <input
               class="border-2 border-black"
               type="text"
-              required
               name="email"
               placeholder="Email"
             />
@@ -37,7 +36,6 @@ export function Login() {
             <input
               class="mb-4 border-2 border-black"
               type="password"
-              required
               name="password"
               placeholder="Password"
             />

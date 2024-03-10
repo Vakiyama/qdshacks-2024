@@ -11,6 +11,19 @@ export function NavHeader({ userId }: { userId: number | undefined }) {
           <p class="text-white">Reset DB</p>
         </button>
       </div>
+      
+      <div class="flex self-center">
+        {userId && <p class=" text-white ">{userId}</p>}
+        <a href= "/add"><button
+          class="m-2 bg-blue-700  hover:bg-blue-800 rounded-lg p-2 pl-5 pr-5"
+          hx-post="/add"
+          hx-swap="none"
+        >
+          <p class="text-white">Add Categories</p>
+        </button>
+        </a>
+      </div>
+
       <div class="flex self-center">
         {userId ? (
           <button
