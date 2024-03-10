@@ -37,19 +37,18 @@ export class CategoryService implements CategoryServices {
     }
   }
 
-  async getCateoriesByUserId(id: number): Promise<Category[] | undefined> {
+  async getCateoriesByUserId(id: number): Promise<Category[]> {
     try {
-      const sql = `SELECT category_id FROM Category
-        WHERE user_id = ?;
-        `;
+      const sql = `SELECT * FROM Category WHERE user_id = ?;`;
       const result = await client.execute({
         sql: sql,
         args: [id],
       });
       const categoryArray = parseTable<Category>(result);
-      return categoryArray;
+      return categoryArray || [];
     } catch (error) {
-      console.log("ERROR ");
+      console.error("ERROR", error);
+      return [];
     }
   }
   async updateCategory(

@@ -604,6 +604,10 @@ video {
   display: flex;
 }
 
+.hidden {
+  display: none;
+}
+
 .aspect-square {
   aspect-ratio: 1 / 1;
 }
@@ -660,6 +664,10 @@ video {
 
 .w-screen {
   width: 100vw;
+}
+
+.flex-grow {
+  flex-grow: 1;
 }
 
 .-rotate-12 {

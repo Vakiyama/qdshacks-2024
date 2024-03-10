@@ -25,7 +25,7 @@ router.get("/login", (req: Request, res: Response) => {
 router.post(
   "/login",
   [
-    body("username")
+    body("email")
       .isLength({ min: 3 })
       .withMessage("Username must be at least 3 characters long"),
     body("password")

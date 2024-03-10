@@ -33,6 +33,7 @@ export interface UserServices {
 }
 
 export interface Category {
+  categoryId: number;
   name: string;
   energy: number;
   creatorId: number;

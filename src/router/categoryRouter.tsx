@@ -3,7 +3,6 @@ import { renderToHtml } from "jsxte";
 import { AddCategory } from "../views/pages/addCategory";
 import { RemoveCategory } from "../views/pages/removeCategory";
 import { isAuthenticated } from "../middleware/authenticationMiddleware";
-import { type Category, type CategoryServices } from "../interface/interface";
 import { CategoryService } from "../database/Categories";
 const db = new CategoryService();
 
@@ -35,8 +34,17 @@ router.post("/add", isAuthenticated, async (req: Request, res: Response) => {
   }
 });
 
-router.get("/remove", isAuthenticated, (req: Request, res: Response) => {
-  res.send("Remove Category");
+router.get("/remove", isAuthenticated, async (req: Request, res: Response) => {
+  const userId = req.session.userId as number;
+  let categories = await db.getCateoriesByUserId(userId);
+  console.log("Categories", categories);
+
+  categories = categories || [];
+
+  const html = renderToHtml(
+    <RemoveCategory userId={userId} categories={categories} />
+  );
+  res.send(html);
 });
 
 router.post("/remove", isAuthenticated, async (req: Request, res: Response) => {
