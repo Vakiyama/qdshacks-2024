@@ -6,6 +6,7 @@ import { Categories } from "../views/pages/Categories";
 import { isAuthenticated, mock } from "../middleware/authenticationMiddleware";
 import { CategoryService } from "../database/Categories";
 import type { User } from "../user";
+import { CategoryScreen } from "../views/pages/CategoriesScreen";
 const db = new CategoryService();
 
 const router = Router();
@@ -57,10 +58,10 @@ router.post("/remove", isAuthenticated, async (req: Request, res: Response) => {
   try {
     const { categoryId } = req.body;
     const user_id = req.session.userId as number;
-    console.log(categoryId);
+    console.log("this is the category id", categoryId);
 
     if (!categoryId) {
-      res
+      return res
         .status(400)
         .send("The 'categoryId' field is required and must not be empty.");
     }
@@ -124,9 +125,20 @@ router.get(
   isAuthenticated,
   async (req: Request, res: Response) => {
     try {
+      const userId = res.locals.user.userId;
       const id = Number(req.params.categoryId);
       const category = await db.getCategoryById(id);
-      res.json(category);
+      if (category === undefined) {
+        return res.status(404).send("Category not found");
+      }
+      const html = renderToHtml(
+        <CategoryScreen
+          userId={userId}
+          name={category.name}
+          power={category.energy}
+        />
+      );
+      res.send(html);
     } catch (error) {
       console.log("Error Getting Category", error);
     }

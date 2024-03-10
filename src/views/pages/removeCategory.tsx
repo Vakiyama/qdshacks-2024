@@ -37,7 +37,8 @@ export function RemoveCategory({
               <input
                 type="hidden"
                 name="categoryId"
-                value={category.categoryId}
+                // @ts-ignore
+                value={category.category_id}
               />
               <span class="flex-grow">{category.name}</span>
               <button
