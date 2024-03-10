@@ -96,25 +96,6 @@ export class UserService implements UserServices {
   }
 }
 
-export class UserTable {
-  static async userTable() {
-    const sqlQuery = ` CREATE TABLE User (
-            user_id INT PRIMARY KEY,
-            email VARCHAR (255) NOT NULL,
-            username VARCHAR(255) NOT NULL,
-            password_hash VARCHAR(255) NOT NULL
-        );
-        `;
-
-    try {
-      const result = await client.execute(sqlQuery);
-      console.log("Table created", result);
-    } catch (err) {
-      console.error("Error occurred", err);
-    }
-  }
-}
-
 export default function parseTable<T>(result: ResultSet): T[] {
   return result.rows.map((row) => {
     return result.columns.reduce((object: T, columnName, index) => {

@@ -5,6 +5,7 @@ import { type Category, type CategoryServices } from "../interface/interface";
 import { CategoryService } from "../database/Categories";
 const db = new CategoryService()
 
+
 const router = Router();
 
 router.post("/category/add", async (req: Request, res: Response) => {
@@ -48,3 +49,4 @@ router.post ('/category/view', (req: Request, res: Response)=> {
 
 })
 
+>>>>>>> afc84a4c1286394eb65960d6959a9e985153bec4
