@@ -10,8 +10,10 @@ import { Login } from "../views/pages/Login";
 import { Register } from "../views/pages/Register";
 import { UserService } from "../database/Users";
 import { ensureNotAuthenticated } from "../middleware/authenticationMiddleware";
+import { CategoryService } from "../database/Categories";
 const router = Router();
 const db = new UserService();
+const categoryService = new CategoryService();
 
 declare module "express-session" {
   export interface SessionData {
@@ -68,8 +70,10 @@ router.post("/register", async (req: Request, res: Response) => {
       const hashedPassword = await bcrypt.hash(password, salt);
       const id = await db.createUser(username, email, hashedPassword);
       console.log("The user got created");
-
       req.session.userId = Number(id);
+      categoryService.createCategory("Study", 25, req.session.userId);
+      categoryService.createCategory("Work", 25, req.session.userId);
+      categoryService.createCategory("Leisure", 25, req.session.userId);
       res.redirect("/");
     }
   } catch (error) {
