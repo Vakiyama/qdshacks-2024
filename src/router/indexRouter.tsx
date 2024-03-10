@@ -7,7 +7,7 @@ import { Categories } from '../views/pages/Categories';
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  const html = renderToHtml(<Categories />);
+  const html = renderToHtml(<Categories powerOpacity={1} />);
   res.send(html);
 });
 
