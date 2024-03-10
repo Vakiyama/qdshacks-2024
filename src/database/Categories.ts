@@ -18,6 +18,7 @@ export class CategoryService implements CategoryServices {
       return result.lastInsertRowid;
     } catch (error) {
       console.log(error);
+      console.log("Error creating category");
     }
   }
 
@@ -48,7 +49,8 @@ export class CategoryService implements CategoryServices {
       const categoryArray = parseTable<Category>(result);
       return categoryArray;
     } catch (error) {
-      console.log("ERROR ");
+      const errorMessage = `Failed to retrieve categories for user ID`;
+  console.log(errorMessage);
     }
   }
   async updateCategory(

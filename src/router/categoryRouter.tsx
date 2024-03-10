@@ -1,6 +1,7 @@
 import { Router, type Request, type Response } from "express";
 import { renderToHtml } from "jsxte";
 import { AddCategory } from "../views/pages/addCategory";
+import { RemoveCategory } from "../views/pages/removeCategory";
 import { isAuthenticated } from "../middleware/authenticationMiddleware";
 import { type Category, type CategoryServices } from "../interface/interface";
 import { CategoryService } from "../database/Categories";
@@ -16,23 +17,27 @@ router.get("/add", isAuthenticated, (req: Request, res: Response) => {
 
 router.post("/add", isAuthenticated, async (req: Request, res: Response) => {
   try {
-    const [name, energy] = req.body;
+    const { name, energy } = req.body;
     const user_id = req.session.userId as number;
 
     if (!user_id) {
-      console.log("User is not logged in");
+       res.status(400).send("User Is Not Authenticated.")
     }
 
     if (!name || !energy) {
-      console.log("Name or Energy is incorrect");
+        res.status(400).send("Missing required fields: 'name' and 'energy' must both be provided.");
+
     }
 
     const newCategory = await db.createCategory(name, energy, user_id);
-    console.log("New Category", newCategory);
     res.redirect("/");
   } catch (error) {
     console.log("Error Creating Category", error);
   }
+});
+
+router.get("/remove", isAuthenticated, (req: Request, res: Response) => {
+  res.send("Remove Category");
 });
 
 router.post("/remove", isAuthenticated, async (req: Request, res: Response) => {
@@ -41,12 +46,14 @@ router.post("/remove", isAuthenticated, async (req: Request, res: Response) => {
     const user_id = req.session.userId as number;
 
     if (!name) {
-      console.log("Name is incorrect");
-      res.send("Name is incorrect");
-    }
-
+        res.status(400).send("The 'name' field is required and must not be empty.");
+      }
+      
     const removeCategory = await db.removeCategory(name, user_id);
-  } catch {}
+    res.redirect("/");
+  } catch (error) {
+    console.log("Error Removing Category", error);
+  }
 });
 
 router.get("/list", isAuthenticated, async (req: Request, res: Response) => {
@@ -75,9 +82,9 @@ router.post(
       const id = Number(req.params.categoryId);
 
       if (!name || !energy) {
-        console.log("Name or Energy is incorrect");
-        res.status(400).send("Name or Energy is incorrect");
+        res.status(400).send("Both 'name' and 'energy' are required and must not be empty.");
       }
+      
 
       const updateCategory = await db.updateCategory(id, name, energy);
     } catch (error) {
