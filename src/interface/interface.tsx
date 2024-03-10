@@ -46,7 +46,7 @@ export interface CategoryServices {
     user_id: number
   ) => Promise<bigint | undefined>;
   removeCategory: (creatorId: number) => Promise<void>;
-  getCateoriesByUserId: (id: number) => Promise<Category[] | undefined>;
+  getCategoriesByUserId: (id: number) => Promise<Category[] | undefined>;
 }
 export interface ResultSet {
   rows: Array<{ [key: string]: any }>;

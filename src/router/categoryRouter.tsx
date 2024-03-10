@@ -42,7 +42,7 @@ router.post('/add', isAuthenticated, async (req: Request, res: Response) => {
 
 router.get('/remove', isAuthenticated, async (req: Request, res: Response) => {
   const userId = req.session.userId as number;
-  let categories = await db.getCateoriesByUserId(userId);
+  let categories = await db.getCategoriesByUserId(userId);
   console.log('Categories', categories);
 
   categories = categories || [];
@@ -75,9 +75,9 @@ router.post('/remove', isAuthenticated, async (req: Request, res: Response) => {
 router.get('/list', isAuthenticated, async (req: Request, res: Response) => {
   try {
     const user_id = req.session.userId as number;
-    const categories = await db.getCateoriesByUserId(user_id);
+    const categories = await db.getCategoriesByUserId(user_id);
     const user = res.locals.user as User;
-      console.log(categories)
+    console.log(categories);
 
     const html = renderToHtml(
       <Categories
@@ -132,5 +132,21 @@ router.get(
     }
   }
 );
+router.post('/resetBattery', async (req: Request, res: Response) => {
+  const userId = req.session.userId as number;
+  try {
+    const categories = await db.getCategoriesByUserId(userId);
+    await Promise.all(
+      categories.map((category) =>
+        db.updateCategory(category.categoryId, category.name, 0)
+      )
+    );
+    res.send('Battery levels reset successfully');
+    res.redirect('/');
+  } catch (error) {
+    console.log('Error Resetting Battery', error);
+    res.status(500).send('Failed to reset battery levels');
+  }
+});
 
 export default router;

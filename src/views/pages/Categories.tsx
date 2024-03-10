@@ -123,7 +123,7 @@ export function Categories({
                 powerOpacity={category.energy}
               >
                 <CategoryItem
-                //@ts-ignore
+                  //@ts-ignore
                   id={category.category_id}
                   title={category.name}
                   data={category.energy.toString()}
@@ -159,7 +159,7 @@ export function Categories({
                 powerOpacity={category.energy}
               >
                 <CategoryItem
-                //@ts-ignore
+                  //@ts-ignore
                   id={category.category_id}
                   title={category.name}
                   data={category.energy.toString()}
