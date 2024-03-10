@@ -21,18 +21,21 @@ export class CategoryService implements CategoryServices {
         
     }
 
-    async removeCategory (name: string): Promise <void> {
+    async removeCategory(name: string, userId: number): Promise<void> {
       try {
-        const sqlQuery = `DELETE FROM Category 
-        WHERE category_name = ?`;
-        await client.execute({
-          sql: sqlQuery,
-          args: [name]
-        })
+          // Update the SQL query to include a condition for both the category name and the creator_id
+          const sqlQuery = `DELETE FROM Category WHERE name = ? AND user_id = ?`;
+  
+          // Execute the query with both the name and userId as arguments
+          await client.execute({
+              sql: sqlQuery,
+              args: [name, userId]
+          });
       } catch (error) {
-        console.error(error)
+          console.error(error);
       }
-    }
+  }
+  
 
     async getCateoriesByUserId (id: number): Promise<Category[] | undefined> {
       try {

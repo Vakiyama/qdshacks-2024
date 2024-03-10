@@ -36,6 +36,7 @@ router.post ('/category/remove', isAuthenticated, async (req: Request, res: Resp
         const {name} = req.body;
         const user_id = req.session.userId as number;
         
+        
         if (!name) {
             console.log("Name is incorrect")
         }
