@@ -70,12 +70,9 @@ export function Categories({
   const powerLineColor = interpolateColors(background, highlight, powerOpacity);
   const rgbString = `rgb(${powerLineColor.r}, ${powerLineColor.g}, ${powerLineColor.b})`;
 
-<<<<<<< HEAD
   const categoriesLeft = categories.splice(0, categories.length);
   const categoriesRight = categories;
 
-=======
->>>>>>> 516f5d7f8a593a6871366f6ab91bb9232a8531cb
   return (
     <Html>
       <NavHeader userId={userId} />
@@ -136,7 +133,7 @@ export function Categories({
         />
         {/* middle-border */}
         <div class="flex flex-col w-1/2 ml-5 relative">
-          {categoriesLeft.map((category) => {
+          {categoriesRight.map((category) => {
             const powerOpacity = interpolateColors(
               background,
               highlight,

@@ -76,14 +76,10 @@ router.get('/list', isAuthenticated, async (req: Request, res: Response) => {
   try {
     const user_id = req.session.userId as number;
     const categories = await db.getCateoriesByUserId(user_id);
-<<<<<<< HEAD
-    const html = renderToHtml(<Categories userId={user_id} categories={categories} />);
-=======
     const user = res.locals.user as User;
     const html = renderToHtml(
-      <Categories powerOpacity={1} userId={user ? user.userId : undefined} />
+      <Categories categories={categories} userId={user ? user.userId : undefined} />
     );
->>>>>>> 516f5d7f8a593a6871366f6ab91bb9232a8531cb
     res.send(html);
   } catch (error) {
     console.log('Error Getting Categories', error);
