@@ -3,13 +3,13 @@ import { NavHeader } from '../components/Navigation';
 import { Category as CategoryItem } from '../components/Category';
 import type { Category } from '../../interface/interface';
 
-const categoryClasslist = 'mb-5 w-full bg-gray-400 h-40 mr-4 rounded-lg';
+const categoryClasslist = "mb-5 w-full bg-gray-400 h-40 mr-4 rounded-lg";
 
 type RGBColor = { r: number; g: number; b: number };
 
 const CategoryWrapper: JSXTE.Component<{
   rgbString: string;
-  position: 'left' | 'right';
+  position: "left" | "right";
   powerOpacity: number;
 }> = ({ rgbString, position, powerOpacity, children }) => {
   return (
@@ -24,12 +24,12 @@ const CategoryWrapper: JSXTE.Component<{
         {children}
       </div>
       <div
-        class={`absolute ${position === 'left' ? 'right-0' : 'left-0'} top-3`}
+        class={`absolute ${position === "left" ? "right-0" : "left-0"} top-3`}
       >
         <div
           class={`bg-black absolute ${
-            position === 'left' ? 'left-0' : 'right-0'
-          } w-6 h-px ${position === 'left' ? 'rotate-12' : '-rotate-12'}`}
+            position === "left" ? "left-0" : "right-0"
+          } w-6 h-px ${position === "left" ? "rotate-12" : "-rotate-12"}`}
           style={`background-color: ${rgbString}`}
         />
       </div>
@@ -55,7 +55,7 @@ export function Categories({
     opacity: number
   ): RGBColor {
     if (opacity < 0 || opacity > 1) {
-      throw new Error('Opacity must be between 0 and 1');
+      throw new Error("Opacity must be between 0 and 1");
     }
 
     const r = Math.round(colorA.r * (1 - opacity) + colorB.r * opacity);
@@ -70,12 +70,29 @@ export function Categories({
   const powerLineColor = interpolateColors(background, highlight, powerOpacity);
   const rgbString = `rgb(${powerLineColor.r}, ${powerLineColor.g}, ${powerLineColor.b})`;
 
+<<<<<<< HEAD
   const categoriesLeft = categories.splice(0, categories.length);
   const categoriesRight = categories;
 
+=======
+>>>>>>> 516f5d7f8a593a6871366f6ab91bb9232a8531cb
   return (
     <Html>
       <NavHeader userId={userId} />
+      <nav class="nav">
+        <div class="flex justify-around p-4 bg-slate-900">
+          <a href="/category/add" class="nav-button">
+            <button class="bg-blue-500 hover:bg-blue-600 text-white text-lg font-bold py-2 px-4 rounded">
+              Add Category
+            </button>
+          </a>
+          <a href="/category/remove" class="nav-button">
+            <button class="bg-red-500 hover:bg-red-600 text-white text-lg font-bold py-2 px-4 rounded">
+              Remove Category
+            </button>
+          </a>
+        </div>
+      </nav>
       <div
         class="
       w-full 
@@ -113,8 +130,8 @@ export function Categories({
           style={`;
             background-color: ${rgbString};
             box-shadow: 0px 0px ${4 + 10 * powerOpacity}px ${
-              4 * powerOpacity
-            }px ${rgbString};
+            4 * powerOpacity
+          }px ${rgbString};
           `}
         />
         {/* middle-border */}

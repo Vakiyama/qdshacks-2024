@@ -28,11 +28,6 @@ export function NavHeader({ userId }: { userId: number | undefined }) {
             </a>
           </button>
         )}
-        <button class="m-2 hover:bg-blue-700 rounded-lg p-2 pl-5 pr-5">
-          <a class="text-gray-50" href="/auth/register">
-            Register
-          </a>
-        </button>
       </div>
     </nav>
   );
