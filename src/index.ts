@@ -7,8 +7,8 @@ import path from "node:path";
 import liveReload from "livereload";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
-import authRouter from "./router/authenticationRouter.js";
-import { DatabaseReset } from "./database/databaseReset.js";
+import authRouter from "./router/authenticationRouter.tsx";
+import { DatabaseReset } from "./database/databaseReset.ts";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PORT = process.env.PORT || 3000;

@@ -1,14 +1,15 @@
+import parseTable from "./Users";
 import { client} from "./client"
 import { type CategoryServices, type Category} from "../interface/interface"
 
 
 export class CategoryService implements CategoryServices {
-     async createCategory (name: string, energy: number): Promise <bigint | undefined> {
+     async createCategory (name: string, energy: number, user_id: number): Promise <bigint | undefined> {
         try {
-            const sql =` INSERT INTO Category (name, energy) VALUES (?, ?) RETURNING *`;
+            const sql =` INSERT INTO Category (name, energy, creator_id) VALUES (?, ?, ?)`;
              const result = await client.execute({
                  sql: sql,
-                 args: [name, energy]
+                 args: [name, energy, user_id]
              })
 
              return result.lastInsertRowid
@@ -16,6 +17,7 @@ export class CategoryService implements CategoryServices {
         } catch (error) {
             console.log(error)
         }
+
         
     }
 
@@ -32,16 +34,19 @@ export class CategoryService implements CategoryServices {
       }
     }
 
-    async findCategoryByName (name: string): Promise<Category | undefined> {
+    async findCategoryById (id: number): Promise<Category[] | undefined> {
       try {
-        const sql = `SELECT name FROM Category
-        WHERE name = ?;
+        const sql = `SELECT category_id FROM Category
+        WHERE id = ?;
         `;
         const result = await client.execute({
           sql: sql,
-          args: [name]
+          args: [id]
         })
-        const categoryArray = parseTable<CategoryService>(result);
+        const categoryArray = parseTable<Category>(result);
+        if (categoryArray.length) {
+            return categoryArray
+        }
       } catch (error) {
         console.log("ERROR ")
       }
@@ -50,8 +55,9 @@ export class CategoryService implements CategoryServices {
 
 
 
+
 async function createCategoryTable(): Promise<void> {
-    const sql = `
+  const sql = `
       CREATE TABLE Category (
         category_id INT PRIMARY KEY,
         name VARCHAR(255),8
@@ -60,15 +66,13 @@ async function createCategoryTable(): Promise<void> {
         FOREIGN KEY (user_id) REFERENCES Users(user_id)
       );
     `;
-  
-    try {
-      const result = await client.execute(sql);
-      console.log('Table created', result);
-    } catch (err) {
-      console.error('Error occurred', err);
-    }
-  }
-  
 
-  createCategoryTable();
-  
+  try {
+    const result = await client.execute(sql);
+    console.log("Table created", result);
+  } catch (err) {
+    console.error("Error occurred", err);
+  }
+}
+
+createCategoryTable();
