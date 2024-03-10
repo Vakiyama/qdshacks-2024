@@ -14,7 +14,7 @@ export async function isAuthenticated(
     const userId = req.session.userId;
     try {
       const user = await userService.findUserById(userId);
-      const categories = await categoryDb.getCateoriesByUserId(userId);
+      const categories = await categoryDb.getCategoriesByUserId(userId);
 
       const categoriesNameAndEnergy = categories!.map((category) => {
         return { name: category.name, charge: category.energy };

@@ -1,8 +1,8 @@
-import type { User } from '../../user';
-import { Html } from '../components/Html';
-import { NavHeader } from '../components/Navigation';
-import { MiniBattery } from '../components/MiniBattery';
-import { BigBattery } from '../components/BigBattery';
+import type { User } from "../../user";
+import { Html } from "../components/Html";
+import { NavHeader } from "../components/Navigation";
+import { MiniBattery } from "../components/MiniBattery";
+import { BigBattery } from "../components/BigBattery";
 
 export function Home({ user }: { user: User }) {
   return (
@@ -19,6 +19,15 @@ export function Home({ user }: { user: User }) {
           </a>
         </button>
       </div>
+      <form action="/category/resetBattery" method="post">
+        <input type="hidden" name="userId" value={user.userId} />
+        <button
+          type="submit"
+          class="m-2 bg-red-500 hover:bg-red-800 rounded-xl p-4 pl-8 pr-8"
+        >
+          <span class="text-white text-xl">Reset Battery</span>
+        </button>
+      </form>
     </Html>
   );
 }

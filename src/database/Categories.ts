@@ -37,7 +37,7 @@ export class CategoryService implements CategoryServices {
     }
   }
 
-  async getCateoriesByUserId(id: number): Promise<Category[]> {
+  async getCategoriesByUserId(id: number): Promise<Category[]> {
     try {
       const sql = `SELECT * FROM Category WHERE user_id = ?;`;
       const result = await client.execute({
@@ -63,7 +63,7 @@ export class CategoryService implements CategoryServices {
         args: [name, energy, id],
       });
     } catch (error) {
-      console.log("ERROR");
+      console.log("ERROR updating the category", error);
     }
   }
   async getCategoryById(id: number): Promise<Category | undefined> {
