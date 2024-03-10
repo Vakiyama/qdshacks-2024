@@ -37,11 +37,17 @@ const CategoryWrapper: JSXTE.Component<{
 };
 
 // 20*opacity
-export function Categories({ powerOpacity, userId }: { powerOpacity: number, userId: number | undefined }) {
+export function Categories({
+  powerOpacity,
+  userId,
+}: {
+  powerOpacity: number;
+  userId: number | undefined;
+}) {
   function interpolateColors(
     colorA: RGBColor,
     colorB: RGBColor,
-    opacity: number,
+    opacity: number
   ): RGBColor {
     if (opacity < 0 || opacity > 1) {
       throw new Error('Opacity must be between 0 and 1');
@@ -54,10 +60,14 @@ export function Categories({ powerOpacity, userId }: { powerOpacity: number, use
     return { r, g, b };
   }
 
+
   const background = { r: 96, g: 165, b: 250 };
   const highlight = { r: 96, g: 165, b: 250 };
   const powerLineColor = interpolateColors(background, highlight, powerOpacity);
   const rgbString = `rgb(${powerLineColor.r}, ${powerLineColor.g}, ${powerLineColor.b})`;
+
+
+
   return (
     <Html>
       <NavHeader userId={userId} />
