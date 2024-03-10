@@ -1,6 +1,7 @@
 import { Router, type Request, type Response } from "express";
 import { body, validationResult } from "express-validator";
 import flash from "connect-flash";
+import { isAuthenticated } from "../middleware/authenticationMiddleware";
 import { type Category, type CategoryServices } from "../interface/interface";
 import { CategoryService } from "../database/Categories";
 const db = new CategoryService()
@@ -8,10 +9,16 @@ const db = new CategoryService()
 
 const router = Router();
 
-router.post("/category/add", async (req: Request, res: Response) => {
+router.post("/category/add", isAuthenticated, async (req: Request, res: Response) => {
     try {
 
-        const {name, energy, user_id} = req.body;
+        const [name, energy] = req.body;
+        const user_id = req.session.userId as number;
+
+        if (!user_id) {
+            req.flash("error", "You must be logged in to create a category")
+            res.redirect("/login")
+        }
         
         if (!name || !energy) {
             console.log("Name or Energy is incorrect")
@@ -24,9 +31,10 @@ router.post("/category/add", async (req: Request, res: Response) => {
     }
 })
 
-router.post ('/category/remove', async (req: Request, res: Response)=> {
+router.post ('/category/remove', isAuthenticated, async (req: Request, res: Response)=> {
     try {
         const {name} = req.body;
+        const user_id = req.session.userId as number;
         
         if (!name) {
             console.log("Name is incorrect")
@@ -39,12 +47,12 @@ router.post ('/category/remove', async (req: Request, res: Response)=> {
     }
 })
 
-router.post ('/category/find', (req: Request, res: Response)=> {
+router.post ('/category/find', isAuthenticated, (req: Request, res: Response)=> {
 
 })
 
 
-router.post ('/category/view', (req: Request, res: Response)=> {
+router.post ('/category/view', isAuthenticated, (req: Request, res: Response)=> {
 
 })
 
