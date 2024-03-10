@@ -1,4 +1,4 @@
-import { Router, type Request, type Response } from "express";
+import { Router, type Request, type Response, type NextFunction } from "express";
 import bcrypt from "bcrypt";
 import { body, validationResult } from "express-validator";
 import flash from "connect-flash";
@@ -7,7 +7,7 @@ import { Home } from "../views/pages/Home";
 import { Login } from "../views/pages/Login";
 import { Register } from "../views/pages/Register";
 import { UserService } from "../database/Users";
-import { isAuthenticated } from "../middleware/authenticationMiddleware";
+import { ensureNotAuthenticated, isAuthenticated } from "../middleware/authenticationMiddleware";
 const router = Router();
 const db = new UserService();
 
@@ -60,7 +60,7 @@ router.post(
   }
 );
 
-router.get("/register", (req: Request, res: Response) => {
+router.get("/register", ensureNotAuthenticated,  (req: Request, res: Response, next: NextFunction) => {
   const html = renderToHtml(<Register />);
   res.send(html);
 });
