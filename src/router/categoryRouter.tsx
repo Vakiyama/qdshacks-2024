@@ -20,12 +20,15 @@ router.post("/add", isAuthenticated, async (req: Request, res: Response) => {
     const user_id = req.session.userId as number;
 
     if (!user_id) {
-       res.status(400).send("User Is Not Authenticated.")
+      res.status(400).send("User Is Not Authenticated.");
     }
 
     if (!name || !energy) {
-        res.status(400).send("Missing required fields: 'name' and 'energy' must both be provided.");
-
+      res
+        .status(400)
+        .send(
+          "Missing required fields: 'name' and 'energy' must both be provided."
+        );
     }
 
     const newCategory = await db.createCategory(name, energy, user_id);
@@ -50,14 +53,16 @@ router.get("/remove", isAuthenticated, async (req: Request, res: Response) => {
 
 router.post("/remove", isAuthenticated, async (req: Request, res: Response) => {
   try {
-    const { name } = req.body;
+    const { categoryId } = req.body;
     const user_id = req.session.userId as number;
 
-    if (!name) {
-        res.status(400).send("The 'name' field is required and must not be empty.");
-      }
-      
-    const removeCategory = await db.removeCategory(name, user_id);
+    if (!categoryId) {
+      res
+        .status(400)
+        .send("The 'categoryId' field is required and must not be empty.");
+    }
+
+    const removeCategory = await db.removeCategory(categoryId);
     res.redirect("/");
   } catch (error) {
     console.log("Error Removing Category", error);
@@ -90,9 +95,10 @@ router.post(
       const id = Number(req.params.categoryId);
 
       if (!name || !energy) {
-        res.status(400).send("Both 'name' and 'energy' are required and must not be empty.");
+        res
+          .status(400)
+          .send("Both 'name' and 'energy' are required and must not be empty.");
       }
-      
 
       const updateCategory = await db.updateCategory(id, name, energy);
     } catch (error) {
