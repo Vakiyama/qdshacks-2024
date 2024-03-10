@@ -44,6 +44,7 @@ async function isAuthenticatedReal(
           categoriesNameAndEnergy,
           userId
         );
+        userObject.username = user.username;
         res.locals.user = userObject;
         return next();
       }
