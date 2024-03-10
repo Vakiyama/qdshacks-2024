@@ -7,7 +7,7 @@ import {
 } from "../interface/interface";
 
 export class UserService implements UserServices {
- async findUserByEmailAndPassword(
+  async findUserByEmailAndPassword(
     email: string,
     password_hash: string
   ): Promise<User | undefined> {
@@ -27,7 +27,7 @@ export class UserService implements UserServices {
     }
   }
 
- async findUserByUsername(username: string): Promise<User | undefined> {
+  async findUserByUsername(username: string): Promise<User | undefined> {
     try {
       const result = await client.execute({
         sql: `SELECT * FROM User WHERE username = ?`,
@@ -44,7 +44,7 @@ export class UserService implements UserServices {
     }
   }
 
- async findUserByEmail(email: string): Promise<User | undefined> {
+  async findUserByEmail(email: string): Promise<User | undefined> {
     try {
       const result = await client.execute({
         sql: `SELECT * FROM User WHERE email = ?`,
@@ -61,7 +61,7 @@ export class UserService implements UserServices {
     }
   }
 
- async createUser(
+  async createUser(
     email: string,
     username: string,
     password_hash: string
@@ -77,7 +77,7 @@ export class UserService implements UserServices {
     }
   }
 
- async findUserById(id: number): Promise<User | undefined> {
+  async findUserById(id: number): Promise<User | undefined> {
     try {
       const result = await client.execute({
         sql: `SELECT * FROM User WHERE user_id = ?`,
@@ -115,7 +115,7 @@ export class UserTable {
   }
 }
 
-function parseTable<T>(result: ResultSet): T[] {
+export default function parseTable<T>(result: ResultSet): T[] {
   return result.rows.map((row) => {
     return result.columns.reduce((object: T, columnName, index) => {
       object[columnName as keyof T] = row[columnName];

@@ -7,6 +7,7 @@ import { Home } from "../views/pages/Home";
 import { Login } from "../views/pages/Login";
 import { Register } from "../views/pages/Register";
 import { UserService } from "../database/Users";
+import { isAuthenticated } from "../middleware/authenticationMiddleware";
 const router = Router();
 const db = new UserService();
 
@@ -17,11 +18,7 @@ declare module "express-session" {
 }
 
 router.get("/login", (req: Request, res: Response) => {
-  const html = renderToHtml(
-    <Home>
-      <Login />
-    </Home>
-  );
+  const html = renderToHtml(<Login />);
   res.send(html);
 });
 
@@ -64,11 +61,7 @@ router.post(
 );
 
 router.get("/register", (req: Request, res: Response) => {
-  const html = renderToHtml(
-    <Home>
-      <Register />
-    </Home>
-  );
+  const html = renderToHtml(<Register />);
   res.send(html);
 });
 
