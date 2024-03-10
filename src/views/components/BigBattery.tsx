@@ -12,10 +12,19 @@ function getCellCount(cellCount: number, totalPower: number) {
 
 export function BigBattery({ power }: { power: number }) {
   const cellCount = 20;
+  let color;
+  console.log(power);
+  if (power < 0.5 && power > 0.25) {
+    color = 'rgb(247, 197, 45)';
+  } else if (power < 0.25) {
+    color = 'red';
+  } else {
+    color = 'green';
+  }
   let greenCellCount = getCellCount(cellCount, power);
   const cells = [];
   for (let i = 0; i < cellCount; i++) {
-    cells.push(greenCellCount > 0 ? "green" : "grey");
+    cells.push(greenCellCount > 0 ? color : 'grey');
     greenCellCount--;
   }
   return (

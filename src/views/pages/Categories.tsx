@@ -18,7 +18,7 @@ const CategoryWrapper: JSXTE.Component<{
       <div
         class="mb-8 w-full bg-gray-400 h-40 mr-4 rounded-lg border-2"
         style={`
-        box-shadow: 0px 0px ${4 + 10 * powerOpacity}px ${
+        box-shadow: 0px 0px ${4 + 15 * powerOpacity}px ${
           4 * powerOpacity
         }px ${rgbString};`}
       >
@@ -137,7 +137,7 @@ export function Categories({
           class="w-px p-px h-full rounded "
           style={`;
             background-color: ${rgbString};
-            box-shadow: 0px 0px ${4 + 10 * powerOpacity}px ${
+            box-shadow: 0px 0px ${4 + 15 * powerOpacity}px ${
               4 * powerOpacity
             }px ${rgbString};
           `}
