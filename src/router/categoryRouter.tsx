@@ -1,26 +1,27 @@
-import { Router, type Request, type Response } from "express";
-import { renderToHtml } from "jsxte";
-import { AddCategory } from "../views/pages/addCategory";
-import { RemoveCategory } from "../views/pages/removeCategory";
-import { isAuthenticated } from "../middleware/authenticationMiddleware";
-import { CategoryService } from "../database/Categories";
+import { Router, type Request, type Response } from 'express';
+import { renderToHtml } from 'jsxte';
+import { AddCategory } from '../views/pages/addCategory';
+import { RemoveCategory } from '../views/pages/removeCategory';
+import { isAuthenticated } from '../middleware/authenticationMiddleware';
+import { CategoryService } from '../database/Categories';
+import { Categories } from '../views/pages/Categories';
 const db = new CategoryService();
 
 const router = Router();
 
-router.get("/add", isAuthenticated, (req: Request, res: Response) => {
+router.get('/add', isAuthenticated, (req: Request, res: Response) => {
   const userId = req.session.userId as number;
   const html = renderToHtml(<AddCategory userId={userId} />);
   res.send(html);
 });
 
-router.post("/add", isAuthenticated, async (req: Request, res: Response) => {
+router.post('/add', isAuthenticated, async (req: Request, res: Response) => {
   try {
     const { name, energy } = req.body;
     const user_id = req.session.userId as number;
 
     if (!user_id) {
-      res.status(400).send("User Is Not Authenticated.");
+      res.status(400).send('User Is Not Authenticated.');
     }
 
     if (!name || !energy) {
@@ -32,16 +33,16 @@ router.post("/add", isAuthenticated, async (req: Request, res: Response) => {
     }
 
     const newCategory = await db.createCategory(name, energy, user_id);
-    res.redirect("/");
+    res.redirect('/');
   } catch (error) {
-    console.log("Error Creating Category", error);
+    console.log('Error Creating Category', error);
   }
 });
 
-router.get("/remove", isAuthenticated, async (req: Request, res: Response) => {
+router.get('/remove', isAuthenticated, async (req: Request, res: Response) => {
   const userId = req.session.userId as number;
   let categories = await db.getCateoriesByUserId(userId);
-  console.log("Categories", categories);
+  console.log('Categories', categories);
 
   categories = categories || [];
 
@@ -51,7 +52,7 @@ router.get("/remove", isAuthenticated, async (req: Request, res: Response) => {
   res.send(html);
 });
 
-router.post("/remove", isAuthenticated, async (req: Request, res: Response) => {
+router.post('/remove', isAuthenticated, async (req: Request, res: Response) => {
   try {
     const { categoryId } = req.body;
     const user_id = req.session.userId as number;
@@ -64,31 +65,31 @@ router.post("/remove", isAuthenticated, async (req: Request, res: Response) => {
     }
 
     const removeCategory = await db.removeCategory(categoryId);
-    res.redirect("/");
+    res.redirect('/');
   } catch (error) {
-    console.log("Error Removing Category", error);
+    console.log('Error Removing Category', error);
   }
 });
 
-router.get("/list", isAuthenticated, async (req: Request, res: Response) => {
+router.get('/list', isAuthenticated, async (req: Request, res: Response) => {
   try {
     const user_id = req.session.userId as number;
     const categories = await db.getCateoriesByUserId(user_id);
-    const html = renderToHtml(<Categories categories={categories} />);
+    const html = renderToHtml(<Categories userId={user_id} categories={categories} />);
     res.send(html);
   } catch (error) {
-    console.log("Error Getting Categories", error);
+    console.log('Error Getting Categories', error);
   }
 });
 
 router.get(
-  "/edit/:categoryId",
+  '/edit/:categoryId',
   isAuthenticated,
   async (req: Request, res: Response) => {}
 );
 
 router.post(
-  "/edit/:categoryId",
+  '/edit/:categoryId',
   isAuthenticated,
   async (req: Request, res: Response) => {
     try {
@@ -104,13 +105,13 @@ router.post(
 
       const updateCategory = await db.updateCategory(id, name, energy);
     } catch (error) {
-      console.log("Error Updating Category", error);
+      console.log('Error Updating Category', error);
     }
   }
 );
 
 router.get(
-  "/show/:categoryId",
+  '/show/:categoryId',
   isAuthenticated,
   async (req: Request, res: Response) => {
     try {
@@ -118,7 +119,7 @@ router.get(
       const category = await db.getCategoryById(id);
       res.json(category);
     } catch (error) {
-      console.log("Error Getting Category", error);
+      console.log('Error Getting Category', error);
     }
   }
 );

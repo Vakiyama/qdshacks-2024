@@ -1,6 +1,7 @@
 import { Html } from '../components/Html';
 import { NavHeader } from '../components/Navigation';
-import { Category } from '../components/Category';
+import { Category as CategoryItem } from '../components/Category';
+import type { Category } from '../../interface/interface';
 
 const categoryClasslist = 'mb-5 w-full bg-gray-400 h-40 mr-4 rounded-lg';
 
@@ -38,12 +39,16 @@ const CategoryWrapper: JSXTE.Component<{
 
 // 20*opacity
 export function Categories({
-  powerOpacity,
+  categories,
   userId,
 }: {
-  powerOpacity: number;
   userId: number | undefined;
+  categories: Category[];
 }) {
+  const powerOpacity = categories.reduce((value, category) => {
+    return value + category.energy / 100;
+  }, 0);
+
   function interpolateColors(
     colorA: RGBColor,
     colorB: RGBColor,
@@ -60,13 +65,13 @@ export function Categories({
     return { r, g, b };
   }
 
-
   const background = { r: 96, g: 165, b: 250 };
   const highlight = { r: 96, g: 165, b: 250 };
   const powerLineColor = interpolateColors(background, highlight, powerOpacity);
   const rgbString = `rgb(${powerLineColor.r}, ${powerLineColor.g}, ${powerLineColor.b})`;
 
-
+  const categoriesLeft = categories.splice(0, categories.length);
+  const categoriesRight = categories;
 
   return (
     <Html>
@@ -83,20 +88,24 @@ export function Categories({
       "
       >
         <div class="flex flex-col w-1/2">
-          <CategoryWrapper
-            position="left"
-            rgbString={rgbString}
-            powerOpacity={powerOpacity}
-          >
-            <Category title="Work" data="100" />
-          </CategoryWrapper>
-          <CategoryWrapper
-            position="left"
-            rgbString={rgbString}
-            powerOpacity={powerOpacity}
-          >
-            <Category title="Work" data="100" />
-          </CategoryWrapper>
+          {categoriesLeft.map((category) => {
+            const powerOpacity = interpolateColors(
+              background,
+              highlight,
+              category.energy
+            );
+            const rgbString = `rgb(${powerOpacity.r}, ${powerOpacity.g}, ${powerOpacity.b})`;
+
+            return (
+              <CategoryWrapper
+                position="left"
+                rgbString={rgbString}
+                powerOpacity={category.energy}
+              >
+                <CategoryItem title="Work" data="100" />
+              </CategoryWrapper>
+            );
+          })}
         </div>
         {/* middle-border */}
         <div
@@ -110,20 +119,24 @@ export function Categories({
         />
         {/* middle-border */}
         <div class="flex flex-col w-1/2 ml-5 relative">
-          <CategoryWrapper
-            position="right"
-            rgbString={rgbString}
-            powerOpacity={powerOpacity}
-          >
-            <Category title="Work" data="100" />
-          </CategoryWrapper>
-          <CategoryWrapper
-            position="right"
-            rgbString={rgbString}
-            powerOpacity={powerOpacity}
-          >
-            <Category title="Work" data="100" />
-          </CategoryWrapper>
+          {categoriesLeft.map((category) => {
+            const powerOpacity = interpolateColors(
+              background,
+              highlight,
+              category.energy
+            );
+            const rgbString = `rgb(${powerOpacity.r}, ${powerOpacity.g}, ${powerOpacity.b})`;
+
+            return (
+              <CategoryWrapper
+                position="right"
+                rgbString={rgbString}
+                powerOpacity={category.energy}
+              >
+                <CategoryItem title="Work" data="100" />
+              </CategoryWrapper>
+            );
+          })}
         </div>
       </div>
     </Html>

@@ -14,7 +14,7 @@ export function Home({ user }: { user: User }) {
       </div>
       <div class="w-full flex justify-center content-center mt-6">
         <button class="m-2 bg-blue-700  hover:bg-blue-800 rounded-xl p-4 pl-8 pr-8">
-          <a class="text-white text-xl" href="/categories/list">
+          <a class="text-white text-xl" href="/category/list">
             See Categories
           </a>
         </button>
