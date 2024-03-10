@@ -98,7 +98,7 @@ router.post(
         console.log("The user got created");
 
         req.session.userId = Number(id);
-        res.redirect("/test");
+        res.redirect("/");
       }
     } catch (error) {
       console.error(error);

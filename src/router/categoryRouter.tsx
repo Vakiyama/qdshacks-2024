@@ -8,54 +8,48 @@ const db = new CategoryService();
 
 const router = Router();
 
-router.post(
-  "/add",
-  isAuthenticated,
-  async (req: Request, res: Response) => {
-    try {
-      const [name, energy] = req.body;
-      const user_id = req.session.userId as number;
+router.post("/add", isAuthenticated, async (req: Request, res: Response) => {
+  try {
+    const [name, energy] = req.body;
+    const user_id = req.session.userId as number;
 
-      if (!user_id) {
-        console.log("User is not logged in");
-      }
-
-      if (!name || !energy) {
-        console.log("Name or Energy is incorrect");
-      }
-
-      const newCategory = await db.createCategory(name, energy, user_id);
-      res.redirect("back");
-    } catch (error) {
-      console.log("Error Creating Category", error);
+    if (!user_id) {
+      console.log("User is not logged in");
     }
+
+    if (!name || !energy) {
+      console.log("Name or Energy is incorrect");
+    }
+
+    const newCategory = await db.createCategory(name, energy, user_id);
+    res.redirect("back");
+  } catch (error) {
+    console.log("Error Creating Category", error);
   }
-);
+});
 
-router.post(
-  "/remove",
-  isAuthenticated,
-  async (req: Request, res: Response) => {
-    try {
-      const { name } = req.body;
-      const user_id = req.session.userId as number;
+router.post("/remove", isAuthenticated, async (req: Request, res: Response) => {
+  try {
+    const { name } = req.body;
+    const user_id = req.session.userId as number;
 
-      if (!name) {
-        console.log("Name is incorrect");
-      }
+    if (!name) {
+      console.log("Name is incorrect");
+      res.send("Name is incorrect");
+    }
 
-      const removeCategory = await db.removeCategory(name, user_id);
-    } catch {}
-  }
-);
+    const removeCategory = await db.removeCategory(name, user_id);
+  } catch {}
+});
 
 router.get("/list", isAuthenticated, async (req: Request, res: Response) => {
-    try {
-        const user_id = req.session.userId as number;
-        const categories = await db.getCateoriesByUserId(user_id);
-        res.json(categories);
-    } catch (error) {
-        console.log("Error Getting Categories", error);
-    }
-    }
-)
+  try {
+    const user_id = req.session.userId as number;
+    const categories = await db.getCateoriesByUserId(user_id);
+    res.json(categories);
+  } catch (error) {
+    console.log("Error Getting Categories", error);
+  }
+});
+
+export default router;

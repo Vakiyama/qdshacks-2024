@@ -17,6 +17,12 @@
                     sqlite
                 ];
             };
+            environment = {
+              sessionVariables = {
+                LD_LIBRARY_PATH = "${pkgs.stdenv.cc.cc.lib}/lib";
+              };
+          };
+
         }
     );
 }

@@ -2,16 +2,18 @@ import { Category } from "./category";
 
 export class User {
     username: string;
+    userId: number;
     
     categories: Category[]; 
 
     totalBattery: number; 
 
     // 
-    constructor(username: string, userCategories: Category[]) {
+    constructor(username: string, userCategories: Category[], userId: number) {
         this.username = username; 
         this.categories = userCategories;
-        this.totalBattery = 100; 
+        this.totalBattery = 100;
+        this.userId = userId;
 
         this.categories.forEach((category: Category) => {
             this.totalBattery -= category.charge;

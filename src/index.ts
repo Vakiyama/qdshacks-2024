@@ -11,6 +11,7 @@ import { fileURLToPath } from "url";
 import authRouter from "./router/authenticationRouter.tsx";
 import { DatabaseReset } from "./database/databaseReset.ts";
 import { isAuthenticated } from "./middleware/authenticationMiddleware.ts";
+import categoryRouter from "./router/categoryRouter.tsx";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PORT = process.env.PORT || 3000;
@@ -44,8 +45,9 @@ liveReloadServer.server.once("connection", () => {
 
 app.use(indexRouter);
 app.use("/auth", authRouter);
+app.use("/categgory", categoryRouter);
 
-app.post("/resetdb", isAuthenticated, (req, res) => {
+app.post("/resetdb", (req, res) => {
   DatabaseReset.resetDatabase();
   res.status(200).send("Database Reset");
 });

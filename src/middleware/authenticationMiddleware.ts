@@ -20,7 +20,7 @@ export async function isAuthenticated(
         return { name: category.name, charge: category.energy };
       });
       if (user) {
-        const userObject = new User(user.username, categoriesNameAndEnergy);
+        const userObject = new User(user.username, categoriesNameAndEnergy, userId);
         res.locals.user = userObject;
         return next();
       }
