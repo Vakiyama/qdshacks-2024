@@ -3,7 +3,6 @@ export function NavHeader({ userId }: { userId: number | undefined }) {
   return (
     <nav class="flex flex-wrap justify-between p-1 bg-slate-900">
       <div class="flex self-center">
-        {userId && <p class=" text-white ">{userId}</p>}
         <button
           class="m-2 bg-blue-700  hover:bg-blue-800 rounded-lg p-2 pl-5 pr-5"
           hx-post="/resetdb"

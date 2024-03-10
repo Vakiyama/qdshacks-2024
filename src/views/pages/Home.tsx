@@ -3,7 +3,6 @@ import { Html } from '../components/Html';
 import { NavHeader } from '../components/Navigation';
 import { MiniBattery } from '../components/MiniBattery';
 import { BigBattery } from '../components/BigBattery';
-import type { User } from '../../interface/interface';
 
 export function Home({ user }: { user: User }) {
   return (
@@ -15,7 +14,9 @@ export function Home({ user }: { user: User }) {
       </div>
       <div class="w-full flex justify-center content-center mt-6">
         <button class="m-2 bg-blue-700  hover:bg-blue-800 rounded-xl p-4 pl-8 pr-8">
-          <a class="text-white text-xl">See Categories</a>
+          <a class="text-white text-xl" href="/categories/list">
+            See Categories
+          </a>
         </button>
       </div>
     </Html>
