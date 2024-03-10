@@ -9,7 +9,7 @@ export class CategoryService implements CategoryServices {
     user_id: number
   ): Promise<bigint | undefined> {
     try {
-      const sql = ` INSERT INTO Category (name, energy, creator_id) VALUES (?, ?, ?)`;
+      const sql = ` INSERT INTO Category (name, energy, user_id) VALUES (?, ?, ?)`;
       const result = await client.execute({
         sql: sql,
         args: [name, energy, user_id],
@@ -49,6 +49,34 @@ export class CategoryService implements CategoryServices {
       return categoryArray;
     } catch (error) {
       console.log("ERROR ");
+    }
+  }
+  async updateCategory(
+    id: number,
+    name: string,
+    energy: number
+  ): Promise<void> {
+    try {
+      const sql = `UPDATE Category SET name = ?, energy = ? WHERE category_id = ?`;
+      await client.execute({
+        sql: sql,
+        args: [name, energy, id],
+      });
+    } catch (error) {
+      console.log("ERROR");
+    }
+  }
+  async getCategoryById(id: number): Promise<Category | undefined> {
+    try {
+      const sql = `SELECT * FROM Category WHERE category_id = ?`;
+      const result = await client.execute({
+        sql: sql,
+        args: [id],
+      });
+      const categoryArray = parseTable<Category>(result);
+      return categoryArray[0];
+    } catch (error) {
+      console.log("ERROR");
     }
   }
 }

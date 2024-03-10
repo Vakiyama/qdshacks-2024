@@ -1,7 +1,16 @@
+import type { User } from '../../user';
 import { Html } from '../components/Html';
 import { NavHeader } from '../components/Navigation';
 
-export function Home() {
+export function Home({ user }: { user: User }) {
+  function getCellCount(maxCells: number, percentageCharge: number): number {
+    const bars = Math.round((maxCells * percentageCharge) / 100);
+    return bars;
+  }
+
+  const cells = 20;
+  const cellCountPowered = getCellCount(cells, user.totalBattery);
+
   return (
     <Html>
       <NavHeader userId={undefined} />
