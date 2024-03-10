@@ -18,6 +18,7 @@ export class CategoryService implements CategoryServices {
       return result.lastInsertRowid;
     } catch (error) {
       console.log(error);
+      console.log("Error creating category");
     }
   }
 
