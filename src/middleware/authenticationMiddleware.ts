@@ -3,7 +3,7 @@ import { User } from '../user';
 import { UserService } from '../database/Users';
 import { CategoryService } from '../database/Categories';
 
-const mock = true;
+export const mock = true;
 
 async function isAuthenticatedMock(
   req: Request,
@@ -14,7 +14,7 @@ async function isAuthenticatedMock(
   categories.push({ name: 'work', charge: 25 });
   categories.push({ name: 'school', charge: 55 });
   categories.push({ name: 'health', charge: 5 });
-  const userObject = new User('test user', categories, 2);
+  const userObject = new User('test user', categories, 1);
   res.locals.user = userObject;
   req.session.userId = 2;
   return next();
