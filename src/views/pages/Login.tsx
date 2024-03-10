@@ -1,4 +1,4 @@
-import { Html } from "../components/Html";
+import { Html } from '../components/Html';
 
 export function Login() {
   return (
@@ -6,6 +6,8 @@ export function Login() {
       <div class="w-screen h-screen flex justify-center">
         <div
           class="
+          flex
+          flex-col
         place-items-center
         place-self-center 
         w-fit
@@ -40,11 +42,14 @@ export function Login() {
               placeholder="Password"
             />
             <label
-              class="border-4 border-black hover:bg-blue-500 hover:text-white pl-1"
+              class="border-4 border-black hover:bg-blue-500 hover:text-white pl-1 rounded"
               for="submit"
             >
-              <input class="flex justify-end" type="submit" value="Submit" />
+              <input type="submit" value="Submit" />
             </label>
+            <button class="border-4 border-black hover:bg-blue-500 hover:text-white pl-1 mt-2 rounded">
+              <a href="/auth/register">Register</a>
+            </button>
           </form>
         </div>
       </div>
