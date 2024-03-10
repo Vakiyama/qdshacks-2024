@@ -27,6 +27,7 @@ router.post ('/category/remove', async (req: Request, res: Response)=> {
     try {
         const {name} = req.body;
         
+        
         if (!name) {
             console.log("Name is incorrect")
         }
