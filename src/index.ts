@@ -45,9 +45,9 @@ liveReloadServer.server.once("connection", () => {
 
 app.use(indexRouter);
 app.use("/auth", authRouter);
-app.use("/categgory", categoryRouter);
+app.use("/category", categoryRouter);
 
-app.post("/resetdb", (req, res) => {
+app.post("/resetdb", (req: Request, res: Response) => {
   DatabaseReset.resetDatabase();
   res.status(200).send("Database Reset");
 });

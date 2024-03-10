@@ -1,12 +1,18 @@
 import { Router, type Request, type Response } from "express";
-import { body, validationResult } from "express-validator";
-import flash from "connect-flash";
+import { renderToHtml } from "jsxte";
+import { AddCategory } from "../views/pages/addCategory";
 import { isAuthenticated } from "../middleware/authenticationMiddleware";
 import { type Category, type CategoryServices } from "../interface/interface";
 import { CategoryService } from "../database/Categories";
 const db = new CategoryService();
 
 const router = Router();
+
+router.get("/add", isAuthenticated, (req: Request, res: Response) => {
+  const userId = req.session.userId as number;
+  const html = renderToHtml(<AddCategory userId={userId} />);
+  res.send(html);
+});
 
 router.post("/add", isAuthenticated, async (req: Request, res: Response) => {
   try {
@@ -22,7 +28,8 @@ router.post("/add", isAuthenticated, async (req: Request, res: Response) => {
     }
 
     const newCategory = await db.createCategory(name, energy, user_id);
-    res.redirect("back");
+    console.log("New Category", newCategory);
+    res.redirect("/");
   } catch (error) {
     console.log("Error Creating Category", error);
   }
