@@ -7,7 +7,7 @@ export class User {
 
     totalBattery: number; 
 
-    
+    // 
     constructor(username: string, userCategories: Category[]) {
         this.username = username; 
         this.categories = userCategories;
@@ -60,7 +60,7 @@ export class User {
         if (charge <= this.totalBattery) {
             this.totalBattery -= charge;
         }
-        let category = new Category(charge);
+        let category = new Category(name, charge);
         this.addCategory(category);
     }
 

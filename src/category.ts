@@ -4,8 +4,11 @@ export class Category {
 
     charge: number; 
 
-    constructor(chargeLevel: number) {
+    name: string;
+
+    constructor(categoryName: string, chargeLevel: number) {
         this.charge = chargeLevel; 
+        this.name = categoryName; 
     }
     
 }
