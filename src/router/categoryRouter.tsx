@@ -1,18 +1,51 @@
 import { Router, type Request, type Response } from "express";
 import { body, validationResult } from "express-validator";
 import flash from "connect-flash";
-import { type Category } from "../interface/interface";
+import { type Category, type CategoryServices } from "../interface/interface";
+import { CategoryService } from "../database/Categories";
+const db = new CategoryService()
 
 
 const router = Router();
 
-router.post("/category/add", (req: Request, res: Response) => {
-    const { name, energy } = req.body;
-    const user_id = req.session.userId;
-    if (user_id) {
-        db.createCategory(name, energy, user_id);
-        res.redirect("/");
-    } else {
-        res.status(401).send("Unauthorized");
+router.post("/category/add", async (req: Request, res: Response) => {
+    try {
+
+        const {name, energy, user_id} = req.body;
+        
+        if (!name || !energy) {
+            console.log("Name or Energy is incorrect")
+        }
+        
+        const newCategory = await db.createCategory(name, energy, user_id)
+        // this will be a redirect to be a new htmx page
+    } catch (error) {
+        console.log("Error Creating Category", error)
     }
 })
+
+router.post ('/category/remove', async (req: Request, res: Response)=> {
+    try {
+        const {name} = req.body;
+        
+        if (!name) {
+            console.log("Name is incorrect")
+        }
+        
+        const removeCategory = await db.removeCategory(name)
+
+    } catch {
+
+    }
+})
+
+router.post ('/category/find', (req: Request, res: Response)=> {
+
+})
+
+
+router.post ('/category/view', (req: Request, res: Response)=> {
+
+})
+
+>>>>>>> afc84a4c1286394eb65960d6959a9e985153bec4

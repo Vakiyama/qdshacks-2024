@@ -11,6 +11,9 @@ import { isAuthenticated } from "../middleware/authenticationMiddleware";
 const router = Router();
 const db = new UserService();
 
+
+
+
 declare module "express-session" {
   export interface SessionData {
     userId?: number;
