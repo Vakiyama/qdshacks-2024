@@ -1,7 +1,7 @@
-import { type Request, type Response, type NextFunction } from 'express';
-import { User } from '../user';
-import { UserService } from '../database/Users';
-import { CategoryService } from '../database/Categories';
+import { type Request, type Response, type NextFunction } from "express";
+import { User } from "../user";
+import { UserService } from "../database/Users";
+import { CategoryService } from "../database/Categories";
 
 export const mock = false;
 
@@ -11,10 +11,10 @@ async function isAuthenticatedMock(
   next: NextFunction
 ) {
   const categories = [];
-  categories.push({ name: 'work', charge: 25 });
-  categories.push({ name: 'school', charge: 55 });
-  categories.push({ name: 'health', charge: 5 });
-  const userObject = new User('test user', categories, 1);
+  categories.push({ name: "work", charge: 25 });
+  categories.push({ name: "school", charge: 55 });
+  categories.push({ name: "health", charge: 5 });
+  const userObject = new User("test user", categories, 1);
   res.locals.user = userObject;
   req.session.userId = 2;
   return next();
@@ -46,11 +46,11 @@ async function isAuthenticatedReal(
         return next();
       }
     } catch (error) {
-      console.error('Error in isAuthenticated middleware', error);
-      return res.status(500).send('Internal Server Error');
+      console.error("Error in isAuthenticated middleware", error);
+      return res.status(500).send("Internal Server Error");
     }
   } else {
-    return res.redirect('/auth/login');
+    return res.redirect("/auth/login");
   }
 }
 
@@ -62,7 +62,7 @@ export async function ensureNotAuthenticated(
   if (!req.session?.userId) {
     next();
   } else {
-    res.redirect('/');
+    res.redirect("/");
   }
 }
 
