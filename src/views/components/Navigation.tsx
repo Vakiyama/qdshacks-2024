@@ -2,6 +2,11 @@ export function NavHeader({ userId }: { userId: number | undefined }) {
   /* change userId to userObj later */
   return (
     <nav class="flex flex-wrap justify-between p-1 bg-slate-900">
+      <button class="m-2 bg-blue-700 hover:bg-blue-800 rounded-lg p-2 pl-5 pr-5">
+        <a class="text-gray-50" href="/">
+          Home
+        </a>
+      </button>
       <div class="flex self-center">
         <button
           class="m-2 bg-blue-700  hover:bg-blue-800 rounded-lg p-2 pl-5 pr-5"
@@ -11,6 +16,19 @@ export function NavHeader({ userId }: { userId: number | undefined }) {
           <p class="text-white">Reset DB</p>
         </button>
       </div>
+
+      <div class="flex self-center">
+        <a href="/add">
+          <button
+            class="m-2 bg-blue-700  hover:bg-blue-800 rounded-lg p-2 pl-5 pr-5"
+            hx-post="/add"
+            hx-swap="none"
+          >
+            <p class="text-white">Add Categories</p>
+          </button>
+        </a>
+      </div>
+
       <div class="flex self-center">
         {userId ? (
           <button

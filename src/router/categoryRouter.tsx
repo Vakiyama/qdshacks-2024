@@ -1,11 +1,11 @@
-import { Router, type Request, type Response } from "express";
-import { renderToHtml } from "jsxte";
-import { AddCategory } from "../views/pages/addCategory";
-import { RemoveCategory } from "../views/pages/removeCategory";
-import { Categories } from "../views/pages/Categories";
-import { isAuthenticated } from "../middleware/authenticationMiddleware";
-import { CategoryService } from "../database/Categories";
-import type { User } from "../user";
+import { Router, type Request, type Response } from 'express';
+import { renderToHtml } from 'jsxte';
+import { AddCategory } from '../views/pages/addCategory';
+import { RemoveCategory } from '../views/pages/removeCategory';
+import { Categories } from '../views/pages/Categories';
+import { isAuthenticated, mock } from '../middleware/authenticationMiddleware';
+import { CategoryService } from '../database/Categories';
+import type { User } from '../user';
 const db = new CategoryService();
 
 const router = Router();
@@ -77,6 +77,7 @@ router.get("/list", isAuthenticated, async (req: Request, res: Response) => {
     const user_id = req.session.userId as number;
     const categories = await db.getCategoriesByUserId(user_id);
     const user = res.locals.user as User;
+    
     const html = renderToHtml(
       <Categories
         categories={categories}

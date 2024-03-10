@@ -3,15 +3,16 @@ import { NavHeader } from '../components/Navigation';
 import { Category as CategoryItem } from '../components/Category';
 import type { Category } from '../../interface/interface';
 
-const categoryClasslist = "mb-5 w-full bg-gray-400 h-40 mr-4 rounded-lg";
+const categoryClasslist = 'mb-5 w-full bg-gray-400 h-40 mr-4 rounded-lg';
 
 type RGBColor = { r: number; g: number; b: number };
 
 const CategoryWrapper: JSXTE.Component<{
   rgbString: string;
-  position: "left" | "right";
+  position: 'left' | 'right';
   powerOpacity: number;
 }> = ({ rgbString, position, powerOpacity, children }) => {
+  powerOpacity = powerOpacity / 100;
   return (
     <div class="mr-5 relative">
       <div
@@ -24,12 +25,12 @@ const CategoryWrapper: JSXTE.Component<{
         {children}
       </div>
       <div
-        class={`absolute ${position === "left" ? "right-0" : "left-0"} top-3`}
+        class={`absolute ${position === 'left' ? 'right-0' : 'left-0'} top-3`}
       >
         <div
           class={`bg-black absolute ${
-            position === "left" ? "left-0" : "right-0"
-          } w-6 h-px ${position === "left" ? "rotate-12" : "-rotate-12"}`}
+            position === 'left' ? 'left-0' : 'right-0'
+          } w-6 h-px ${position === 'left' ? 'rotate-12' : '-rotate-12'}`}
           style={`background-color: ${rgbString}`}
         />
       </div>
@@ -55,7 +56,7 @@ export function Categories({
     opacity: number
   ): RGBColor {
     if (opacity < 0 || opacity > 1) {
-      throw new Error("Opacity must be between 0 and 1");
+      throw new Error('Opacity must be between 0 and 1');
     }
 
     const r = Math.round(colorA.r * (1 - opacity) + colorB.r * opacity);
@@ -67,10 +68,14 @@ export function Categories({
 
   const background = { r: 96, g: 165, b: 250 };
   const highlight = { r: 96, g: 165, b: 250 };
+  console.log(powerOpacity, 'HHWHHWH');
   const powerLineColor = interpolateColors(background, highlight, powerOpacity);
   const rgbString = `rgb(${powerLineColor.r}, ${powerLineColor.g}, ${powerLineColor.b})`;
 
-  const categoriesLeft = categories.splice(0, categories.length);
+  const categoriesLeft = categories.splice(
+    0,
+    Math.floor(categories.length / 2)
+  );
   const categoriesRight = categories;
 
   return (
@@ -103,10 +108,11 @@ export function Categories({
       >
         <div class="flex flex-col w-1/2">
           {categoriesLeft.map((category) => {
+            console.log(category.energy, 'HEEEEE');
             const powerOpacity = interpolateColors(
               background,
               highlight,
-              category.energy
+              category.energy / 100
             );
             const rgbString = `rgb(${powerOpacity.r}, ${powerOpacity.g}, ${powerOpacity.b})`;
 
@@ -116,7 +122,10 @@ export function Categories({
                 rgbString={rgbString}
                 powerOpacity={category.energy}
               >
-                <CategoryItem title="Work" data="100" />
+                <CategoryItem
+                  title={category.name}
+                  data={category.energy.toString()}
+                />
               </CategoryWrapper>
             );
           })}
@@ -127,8 +136,8 @@ export function Categories({
           style={`;
             background-color: ${rgbString};
             box-shadow: 0px 0px ${4 + 10 * powerOpacity}px ${
-            4 * powerOpacity
-          }px ${rgbString};
+              4 * powerOpacity
+            }px ${rgbString};
           `}
         />
         {/* middle-border */}
@@ -137,7 +146,7 @@ export function Categories({
             const powerOpacity = interpolateColors(
               background,
               highlight,
-              category.energy
+              category.energy / 100
             );
             const rgbString = `rgb(${powerOpacity.r}, ${powerOpacity.g}, ${powerOpacity.b})`;
 
@@ -147,7 +156,10 @@ export function Categories({
                 rgbString={rgbString}
                 powerOpacity={category.energy}
               >
-                <CategoryItem title="Work" data="100" />
+                <CategoryItem
+                  title={category.name}
+                  data={category.energy.toString()}
+                />
               </CategoryWrapper>
             );
           })}
