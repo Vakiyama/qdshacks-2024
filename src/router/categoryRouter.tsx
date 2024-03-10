@@ -55,6 +55,7 @@ router.post("/remove", isAuthenticated, async (req: Request, res: Response) => {
   try {
     const { categoryId } = req.body;
     const user_id = req.session.userId as number;
+    console.log(categoryId);
 
     if (!categoryId) {
       res
@@ -73,7 +74,8 @@ router.get("/list", isAuthenticated, async (req: Request, res: Response) => {
   try {
     const user_id = req.session.userId as number;
     const categories = await db.getCateoriesByUserId(user_id);
-    res.json(categories);
+    const html = renderToHtml(<Categories categories={categories} />);
+    res.send(html);
   } catch (error) {
     console.log("Error Getting Categories", error);
   }

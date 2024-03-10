@@ -2,7 +2,7 @@ import { Html } from "../components/Html";
 import { NavHeader } from "../components/Navigation";
 
 interface Category {
-  categoryId: number;
+  category_id: number;
   name: string;
 }
 
@@ -28,7 +28,7 @@ export function RemoveCategory({
               <input
                 type="hidden"
                 name="categoryId"
-                value={category.categoryId}
+                value={category.category_id}
               />
               <span class="flex-grow">{category.name}</span>
               <button
