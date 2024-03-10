@@ -1,17 +1,17 @@
-import express from "express";
-import { type Request, type Response } from "express";
-import session from "express-session";
-import { indexRouter } from "./router/indexRouter";
-import bodyParser from "body-parser";
-import connectLiveReload from "connect-livereload";
-import path from "node:path";
-import liveReload from "livereload";
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-import authRouter from "./router/authenticationRouter.tsx";
-import { DatabaseReset } from "./database/databaseReset.ts";
-import { isAuthenticated } from "./middleware/authenticationMiddleware.ts";
-import categoryRouter from "./router/categoryRouter.tsx";
+import express from 'express';
+import { type Request, type Response } from 'express';
+import session from 'express-session';
+import { indexRouter } from './router/indexRouter';
+import bodyParser from 'body-parser';
+import connectLiveReload from 'connect-livereload';
+import path from 'node:path';
+import liveReload from 'livereload';
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+import authRouter from './router/authenticationRouter.tsx';
+import { DatabaseReset } from './database/databaseReset.ts';
+import { isAuthenticated } from './middleware/authenticationMiddleware.ts';
+import categoryRouter from './router/categoryRouter.tsx';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PORT = process.env.PORT || 3000;
@@ -19,12 +19,12 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static("public"));
+app.use(express.static('public'));
 app.use(connectLiveReload());
 
 app.use(
   session({
-    secret: "secret",
+    secret: 'secret',
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -37,32 +37,32 @@ app.use(
 
 const liveReloadServer = liveReload.createServer();
 liveReloadServer.watch(path.join(__dirname));
-liveReloadServer.server.once("connection", () => {
+liveReloadServer.server.once('connection', () => {
   setTimeout(() => {
-    liveReloadServer.refresh("/");
+    liveReloadServer.refresh('/');
   }, 100);
 });
 
 app.use(indexRouter);
-app.use("/auth", authRouter);
-app.use("/category", categoryRouter);
+app.use('/auth', authRouter);
+app.use('/category', categoryRouter);
 
-app.post("/resetdb", (req: Request, res: Response) => {
+app.get('/resetdb', (req: Request, res: Response) => {
   DatabaseReset.resetDatabase();
-  res.status(200).send("Database Reset");
+  res.status(200).send('Database Reset');
 });
 
-app.get("/test", isAuthenticated, (req, res) => {
+app.get('/test', isAuthenticated, (req, res) => {
   res.send(res.locals.user);
 });
 
 app.use((req: Request, res: Response) => {
-  res.status(404).send("Page not found");
+  res.status(404).send('Page not found');
 });
 
 app.use((error, req: Request, res: Response) => {
   console.error(error);
-  res.status(500).send("Internal Server Error");
+  res.status(500).send('Internal Server Error');
 });
 
 app.listen(PORT, () => {
