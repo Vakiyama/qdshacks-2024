@@ -18,7 +18,37 @@ export class CategoryService implements CategoryServices {
         }
         
     }
+
+    async removeCategory (name: string): Promise <void> {
+      try {
+        const sqlQuery = `DELETE FROM Category 
+        WHERE category_name = ?`;
+        await client.execute({
+          sql: sqlQuery,
+          args: [name]
+        })
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
+    async findCategoryByName (name: string): Promise<Category | undefined> {
+      try {
+        const sql = `SELECT name FROM Category
+        WHERE name = ?;
+        `;
+        const result = await client.execute({
+          sql: sql,
+          args: [name]
+        })
+        const categoryArray = parseTable<CategoryService>(result);
+      } catch (error) {
+        console.log("ERROR ")
+      }
+    }
 }
+
+
 
 async function createCategoryTable(): Promise<void> {
     const sql = `
