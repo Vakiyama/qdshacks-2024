@@ -30,17 +30,22 @@ router.post("/login", async (req: Request, res: Response) => {
   const { email, password } = req.body;
   try {
     const user = await db.findUserByEmail(email);
+    console.log("user", user);
 
     if (!user) {
       return res.status(401).send("Invalid username or password");
     }
-
-    const match = await bcrypt.compare(password, user.password);
-
+    // @ts-ignore
+    console.log(password, user.password_hash);
+    // @ts-ignore
+    const match = await bcrypt.compare(password, user.password_hash);
+    console.log(match);
     if (!match) {
       res.status(401).send("Invalid username or password");
     } else {
-      req.session.userId = user.id;
+      console.log(user);
+      // @ts-ignore
+      req.session.userId = user.user_id;
       res.redirect("/");
     }
   } catch (error) {
@@ -68,7 +73,7 @@ router.post("/register", async (req: Request, res: Response) => {
     } else {
       const salt = await bcrypt.genSalt(saltRounds);
       const hashedPassword = await bcrypt.hash(password, salt);
-      const id = await db.createUser(username, email, hashedPassword);
+      const id = await db.createUser(email, username, hashedPassword);
       console.log("The user got created");
       req.session.userId = Number(id);
       categoryService.createCategory("Study", 5, req.session.userId);
