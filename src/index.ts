@@ -15,8 +15,6 @@ import { isAuthenticated } from "./middleware/authenticationMiddleware.ts";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PORT = process.env.PORT || 3000;
 
-// import db from "./databaseAccess"
-
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
