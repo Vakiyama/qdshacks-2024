@@ -77,7 +77,8 @@ router.get('/list', isAuthenticated, async (req: Request, res: Response) => {
     const user_id = req.session.userId as number;
     const categories = await db.getCateoriesByUserId(user_id);
     const user = res.locals.user as User;
-    
+      console.log(categories)
+
     const html = renderToHtml(
       <Categories
         categories={categories}

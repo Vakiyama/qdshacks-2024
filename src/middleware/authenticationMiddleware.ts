@@ -3,7 +3,7 @@ import { User } from '../user';
 import { UserService } from '../database/Users';
 import { CategoryService } from '../database/Categories';
 
-export const mock = true;
+export const mock = false;
 
 async function isAuthenticatedMock(
   req: Request,
