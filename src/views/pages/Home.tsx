@@ -1,18 +1,18 @@
-import type { User } from '../../user';
-import { Html } from '../components/Html';
-import { NavHeader } from '../components/Navigation';
-import { MiniBattery } from '../components/MiniBattery';
-import { BigBattery } from '../components/BigBattery';
+import type { User } from "../../user";
+import { Html } from "../components/Html";
+import { NavHeader } from "../components/Navigation";
+import { MiniBattery } from "../components/MiniBattery";
+import { BigBattery } from "../components/BigBattery";
 
 export function Home({ user }: { user: User }) {
   let batteryLeft = 0;
   user.categories.forEach((category) => (batteryLeft += category.charge / 100));
   batteryLeft = 1 - batteryLeft;
-  console.log(batteryLeft)
+  console.log(batteryLeft);
   return (
     <Html>
       <NavHeader userId={user.userId} />
-      <h1>Hello, {user.username}</h1>
+      <h1 class="text-center text-2xl font-bold mt-2">Hello, {user.username}</h1>
       <div class="w-full flex h-4/6 justify-center content-center pt-4 mt-10">
         <BigBattery power={batteryLeft} />
       </div>

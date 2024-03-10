@@ -114,6 +114,7 @@ router.post(
       }
 
       const updateCategory = await db.updateCategory(id, name, energy);
+      res.redirect("back");
     } catch (error) {
       console.log("Error Updating Category", error);
     }
@@ -136,6 +137,7 @@ router.get(
           userId={userId}
           name={category.name}
           power={category.energy}
+          categoryId={id}
         />
       );
       res.send(html);

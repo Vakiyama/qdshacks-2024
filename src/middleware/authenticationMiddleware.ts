@@ -33,12 +33,14 @@ async function isAuthenticatedReal(
       const user = await userService.findUserById(userId);
       const categories = await categoryDb.getCategoriesByUserId(userId);
 
+      console.log("user", user);
+
       const categoriesNameAndEnergy = categories!.map((category) => {
         return { name: category.name, charge: category.energy };
       });
       if (user) {
         const userObject = new User(
-          user.username,
+          user.email,
           categoriesNameAndEnergy,
           userId
         );

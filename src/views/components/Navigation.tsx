@@ -7,15 +7,6 @@ export function NavHeader({ userId }: { userId: number | undefined }) {
           Home
         </a>
       </button>
-      <div class="flex self-center">
-        <button
-          class="m-2 bg-blue-700  hover:bg-blue-800 rounded-lg p-2 pl-5 pr-5"
-          hx-post="/resetdb"
-          hx-swap="none"
-        >
-          <p class="text-white">Reset DB</p>
-        </button>
-      </div>
 
       <div class="flex self-center">
         {userId ? (
