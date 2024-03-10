@@ -11,9 +11,6 @@ import { isAuthenticated } from "../middleware/authenticationMiddleware";
 const router = Router();
 const db = new UserService();
 
-
-
-
 declare module "express-session" {
   export interface SessionData {
     userId?: number;
@@ -97,9 +94,11 @@ router.post(
       } else {
         const salt = await bcrypt.genSalt(saltRounds);
         const hashedPassword = await bcrypt.hash(password, salt);
-        await db.createUser(username, email, hashedPassword);
+        const id = await db.createUser(username, email, hashedPassword);
         console.log("The user got created");
-        res.send("User created");
+
+        req.session.userId = Number(id);
+        res.redirect("/test");
       }
     } catch (error) {
       console.error(error);

@@ -9,7 +9,7 @@ const db = new CategoryService();
 const router = Router();
 
 router.post(
-  "/category/add",
+  "/add",
   isAuthenticated,
   async (req: Request, res: Response) => {
     try {
@@ -33,7 +33,7 @@ router.post(
 );
 
 router.post(
-  "/category/remove",
+  "/remove",
   isAuthenticated,
   async (req: Request, res: Response) => {
     try {
@@ -49,14 +49,13 @@ router.post(
   }
 );
 
-router.post(
-  "/category/find",
-  isAuthenticated,
-  (req: Request, res: Response) => {}
-);
-
-router.post(
-  "/category/view",
-  isAuthenticated,
-  (req: Request, res: Response) => {}
-);
+router.get("/list", isAuthenticated, async (req: Request, res: Response) => {
+    try {
+        const user_id = req.session.userId as number;
+        const categories = await db.getCateoriesByUserId(user_id);
+        res.json(categories);
+    } catch (error) {
+        console.log("Error Getting Categories", error);
+    }
+    }
+)
