@@ -36,7 +36,7 @@ router.post("/add", isAuthenticated, async (req: Request, res: Response) => {
     const newCategory = await db.createCategory(name, energy, user_id);
     res.redirect("/");
   } catch (error) {
-    console.log("Error Creating Category", error);
+    console.log("Error Creating", error);
   }
 });
 
