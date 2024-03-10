@@ -7,6 +7,11 @@ export function NavHeader({ userId }: { userId: number | undefined }) { /* chang
           { userId } 
         </p> 
         }
+        <button class="m-2 bg-blue-700  hover:bg-blue-800 rounded-lg p-2 pl-5 pr-5"
+        hx-post="/resetdb"
+        hx-swap="none">
+          <p class="text-white">Reset DB</p>
+        </button>
       </div>
       <div class="flex self-center">
       {userId ? (
@@ -19,7 +24,7 @@ export function NavHeader({ userId }: { userId: number | undefined }) { /* chang
           <p class="text-white">Logout</p>
         </button>
       ) : (
-        <button class="m-2 bg-indigo-600 rounded-lg p-2 pl-5 pr-5">
+        <button class="m-2 bg-blue-700 hover:bg-blue-800 rounded-lg p-2 pl-5 pr-5">
           <a class="text-gray-50" href="/auth/login">
             Login
           </a>
