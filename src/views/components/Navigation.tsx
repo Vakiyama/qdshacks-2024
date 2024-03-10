@@ -7,7 +7,7 @@ export function NavHeader({ userId }: { userId: number | undefined }) {
           Home
         </a>
       </button>
-
+      <h2 class="text-center text-2xl text-white font-bold mt-2">RE:Charge</h2>
       <div class="flex self-center">
         {userId ? (
           <button
