@@ -66,5 +66,31 @@ export class User {
         this.addCategory(category);
     }
 
+    addPower(userCategory: Category): void {
+        this.categories.forEach((category: Category) => {
+            if (userCategory.name === category.name) {
+                if (this.totalBattery === 0) {
+                    console.log("You have not more batteries");
+                } else {
+                    category.charge++; 
+                    this.totalBattery--;
+                }
+            };
+        });
+    }
+
+    removePower(userCategory: Category): void {
+        this.categories.forEach((category: Category) => {
+            if (userCategory.name === category.name) {
+                if (this.totalBattery === 100) {
+                    console.log("You have max battery!");
+                } else {
+                    category.charge--;
+                    this.totalBattery++; 
+                }
+            }
+        });
+    }
+
 
 }
