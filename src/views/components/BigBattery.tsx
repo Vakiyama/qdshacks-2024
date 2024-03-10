@@ -15,7 +15,7 @@ export function BigBattery({ power }: { power: number }) {
   let greenCellCount = getCellCount(cellCount, power);
   const cells = [];
   for (let i = 0; i < cellCount; i++) {
-    cells.push(greenCellCount > 0 ? 'green' : 'grey');
+    cells.push(greenCellCount > 0 ? "green" : "grey");
     greenCellCount--;
   }
   return (
@@ -23,7 +23,7 @@ export function BigBattery({ power }: { power: number }) {
       <div class="w-1/3 bg-gray-50 border-black border-l-2 border-r-2 border-t-2 h-4 rounded-t absolute left-1/3 -top-3 z-10" />
       <div class="border-black border-2 rounded-xl h-full w-full relative p-2">
         <div class="border-black border-2 rounded-xl h-full w-full p-1">
-          {cells.toReversed().map((cell) => {
+          {cells.reverse().map((cell) => {
             return <Cell color={cell} />;
           })}
         </div>
