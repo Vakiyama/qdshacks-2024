@@ -1,14 +1,22 @@
 import { Html } from '../components/Html';
 import { NavHeader } from '../components/Navigation';
 import { MiniBattery } from '../components/MiniBattery';
+import { BigBattery } from '../components/BigBattery';
+import type { User } from '../../interface/interface';
 
-
-export function Home() {
+export function Home({ user }: { user: User }) {
   return (
     <Html>
-      <NavHeader userId={undefined} />
-      <h1 class="text-1xl font-bold underline">Hello! This is the homepage.</h1>
-      MiniBattery
+      <NavHeader userId={user.id} />
+      <h1>Hello, {user.username}</h1>
+      <div class="w-full flex h-4/6 justify-center content-center pt-4 mt-10">
+        <BigBattery power={0.7} />
+      </div>
+      <div class="w-full flex justify-center content-center mt-6">
+        <button class="m-2 bg-blue-700  hover:bg-blue-800 rounded-xl p-4 pl-8 pr-8">
+          <a class="text-white text-xl">See Categories</a>
+        </button>
+      </div>
     </Html>
   );
 }

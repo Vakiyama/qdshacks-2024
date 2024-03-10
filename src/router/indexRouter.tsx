@@ -7,7 +7,7 @@ import { Categories } from '../views/pages/Categories';
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  const html = renderToHtml(<Home />);
+  const html = renderToHtml(<Home user={}/>);
   res.send(html);
 });
 
