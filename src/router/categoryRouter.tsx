@@ -20,11 +20,12 @@ router.post("/add", isAuthenticated, async (req: Request, res: Response) => {
     const user_id = req.session.userId as number;
 
     if (!user_id) {
-      console.log("User is not logged in");
+       res.status(400).send("User Is Not Authenticated.")
     }
 
     if (!name || !energy) {
-      console.log("Name or Energy is incorrect");
+        res.status(400).send("Missing required fields: 'name' and 'energy' must both be provided.");
+
     }
 
     const newCategory = await db.createCategory(name, energy, user_id);
@@ -53,10 +54,9 @@ router.post("/remove", isAuthenticated, async (req: Request, res: Response) => {
     const user_id = req.session.userId as number;
 
     if (!name) {
-      console.log("Name is incorrect");
-      res.send("Name is incorrect");
-    }
-
+        res.status(400).send("The 'name' field is required and must not be empty.");
+      }
+      
     const removeCategory = await db.removeCategory(name, user_id);
     res.redirect("/");
   } catch (error) {
@@ -90,9 +90,9 @@ router.post(
       const id = Number(req.params.categoryId);
 
       if (!name || !energy) {
-        console.log("Name or Energy is incorrect");
-        res.status(400).send("Name or Energy is incorrect");
+        res.status(400).send("Both 'name' and 'energy' are required and must not be empty.");
       }
+      
 
       const updateCategory = await db.updateCategory(id, name, energy);
     } catch (error) {

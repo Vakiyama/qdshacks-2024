@@ -32,3 +32,16 @@ export async function isAuthenticated(
     return res.redirect("/auth/login");
   }
 }
+
+
+export async function ensureNotAuthenticated(
+  req: Request, 
+  res: Response, 
+  next: NextFunction
+) {
+  if (!req.session?.userId) { 
+    next();
+  } else {
+    res.redirect('/');
+  }
+}
