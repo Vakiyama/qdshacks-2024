@@ -35,7 +35,7 @@ https://qdshacks-2024.onrender.com/resetdb
 
 ```
 git clone https://github.com/Vakiyama/qdshacks-2024 ReCharge
-cd Recharge
+cd ReCharge
 npm i
 npm run dev
 
