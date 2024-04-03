@@ -60,7 +60,7 @@ app.use((req: Request, res: Response) => {
   res.status(404).send('Page not found');
 });
 
-app.use((error, req: Request, res: Response) => {
+app.use((error: Error, req: Request, res: Response) => {
   console.error(error);
   res.status(500).send('Internal Server Error');
 });
